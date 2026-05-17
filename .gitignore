@@ -38,3 +38,6 @@ crashlytics-build.properties
 
 # JetBrains
 *.csproj.user
+
+# Burst Compiler
+*_BurstDebugInformation_DoNotShip/
