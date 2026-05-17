@@ -1,0 +1,1 @@
+Versão 3.2 = Chat de voz implementado, Área externa e Consultório bem estruturados e spawn de avatares correto.

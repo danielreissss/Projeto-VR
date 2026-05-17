@@ -1,0 +1,627 @@
+[Licensing::Module] Trying to connect to existing licensing client channel...
+[Licensing::IpcConnector] Successfully connected to the License Client on channel: "LicenseClient-Daniel" at "2026-04-17T00:16:34.3748134Z"
+[Licensing::Client] Error: Code 10 while verifying Licensing Client signature (process Id: 19412, path: "C:/Program Files/Unity Hub/UnityLicensingClient_V1/Unity.Licensing.Client.exe")
+[Licensing::Module] Error: LicensingClient has failed validation; ignoring
+[Licensing::Client] Handshaking with LicensingClient:
+  Version:                 1.17.4+4293ba1
+  Session Id:              456e3d643496493a9b5d5595920d824d
+  Correlation Id:          ec7ee00a36c2d760c953e5bc098a75ec
+  External correlation Id: 1021904947022732218
+  Machine Id:              O5HtYbcYzNFHTLVlUOavcdirLzM=
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-Daniel" (connect: 0.00s, validation: 0.01s, handshake: 0.02s)
+[Licensing::IpcConnector] Successfully connected to the License Notification on channel: "LicenseClient-Daniel-notifications" at "2026-04-17T00:16:34.4060524Z"
+[Licensing::Module] Error: Access token is unavailable; failed to update
+[Licensing::Client] Successfully updated license
+Built from '6000.0/staging' branch; Version is '6000.0.39f1 (15ea7ed0b100) revision 1436286'; Using compiler version '193933523'; Build Type 'Release'
+OS: 'Windows 11  (10.0.26200) 64bit Professional' Language: 'pt' Physical Memory: 32598 MB
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Module] Serial number assigned to: "4674172051462-unity_49cb31ef445a2f5e11b9-UnityProStuXXXX"
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 1
+[Licensing::Client] Successfully resolved entitlement details
+
+COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Unity.exe
+-batchmode
+-projectPath
+.
+-executeMethod
+MergeUIHelper.ExecuteMerge
+-quit
+-logFile
+merge.log
+Successfully changed project path to: C:/Users/Danie/OneDrive/Documentos/Faculdade/Projeto IC/Unity/testeMultiplayer3.0
+C:/Users/Danie/OneDrive/Documentos/Faculdade/Projeto IC/Unity/testeMultiplayer3.0
+[UnityMemory] Configuration Parameters - Can be set up in boot.config
+    "memorysetup-bucket-allocator-granularity=16"
+    "memorysetup-bucket-allocator-bucket-count=8"
+    "memorysetup-bucket-allocator-block-size=33554432"
+    "memorysetup-bucket-allocator-block-count=8"
+    "memorysetup-main-allocator-block-size=16777216"
+    "memorysetup-thread-allocator-block-size=16777216"
+    "memorysetup-gfx-main-allocator-block-size=16777216"
+    "memorysetup-gfx-thread-allocator-block-size=16777216"
+    "memorysetup-cache-allocator-block-size=4194304"
+    "memorysetup-typetree-allocator-block-size=2097152"
+    "memorysetup-profiler-bucket-allocator-granularity=16"
+    "memorysetup-profiler-bucket-allocator-bucket-count=8"
+    "memorysetup-profiler-bucket-allocator-block-size=33554432"
+    "memorysetup-profiler-bucket-allocator-block-count=8"
+    "memorysetup-profiler-allocator-block-size=16777216"
+    "memorysetup-profiler-editor-allocator-block-size=1048576"
+    "memorysetup-temp-allocator-size-main=16777216"
+    "memorysetup-job-temp-allocator-block-size=2097152"
+    "memorysetup-job-temp-allocator-block-size-background=1048576"
+    "memorysetup-job-temp-allocator-reduction-small-platforms=262144"
+    "memorysetup-allocator-temp-initial-block-size-main=262144"
+    "memorysetup-allocator-temp-initial-block-size-worker=262144"
+    "memorysetup-temp-allocator-size-background-worker=32768"
+    "memorysetup-temp-allocator-size-job-worker=262144"
+    "memorysetup-temp-allocator-size-preload-manager=33554432"
+    "memorysetup-temp-allocator-size-nav-mesh-worker=65536"
+    "memorysetup-temp-allocator-size-audio-worker=65536"
+    "memorysetup-temp-allocator-size-cloud-worker=32768"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gi-baking-worker=262144"
+    "memorysetup-temp-allocator-size-gfx=262144"
+Player connection [24728]  Target information:
+
+Player connection [24728]  * "[IP] 192.168.1.2 [Port] 55504 [Flags] 2 [Guid] 766622263 [EditorId] 766622263 [Version] 1048832 [Id] WindowsEditor(7,dan) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [24728]  * "[IP] 26.35.222.236 [Port] 55504 [Flags] 2 [Guid] 766622263 [EditorId] 766622263 [Version] 1048832 [Id] WindowsEditor(7,dan) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+
+Player connection [24728] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [24728] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+[Package Manager] Connected to IPC stream "Upm-28464" after 0.2 seconds.
+Library Redirect Path: Library/
+[Package Manager] Restoring resolved packages state from cache
+[Licensing::Client] Successfully resolved entitlement details
+[Package Manager] Registered 77 packages:
+  Packages from [https://packages.unity.com]:
+    com.meta.xr.sdk.interaction.ovr@85.0.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.meta.xr.sdk.interaction.ovr@964224d78bc9)
+    com.unity.ai.navigation@2.0.6 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.ai.navigation@c74b2724ed42)
+    com.unity.collab-proxy@2.9.2 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.collab-proxy@8f3c30ecd081)
+    com.unity.ide.rider@3.0.31 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.ide.rider@7921be93db40)
+    com.unity.ide.visualstudio@2.0.22 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.ide.visualstudio@8140e851d83e)
+    com.unity.inputsystem@1.13.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.inputsystem@ea5ab5b33a26)
+    com.unity.multiplayer.tools@2.2.6 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.multiplayer.tools@8395f16a9a9a)
+    com.unity.netcode.gameobjects@1.14.1 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.netcode.gameobjects@9e18ac3e8a23)
+    com.unity.services.multiplayer@1.1.8 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.services.multiplayer@34def56704ad)
+    com.unity.test-framework@1.4.6 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.test-framework@5ac417e07314)
+    com.unity.timeline@1.8.7 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.timeline@c58b4ee65782)
+    com.unity.visualscripting@1.9.5 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.visualscripting@1b53f46e931b)
+    com.unity.xr.management@4.5.1 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.xr.management@20be87dea580)
+    com.unity.xr.openxr@1.14.3 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.xr.openxr@3903c1059bcf)
+    com.unity.xr.core-utils@2.5.1 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.xr.core-utils@c0df0dd5bced)
+    com.unity.xr.legacyinputhelpers@2.1.12 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.xr.legacyinputhelpers@b7579e86f3b4)
+    com.unity.ext.nunit@2.0.5 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.ext.nunit@60ef35ffd3cd)
+    com.unity.transport@2.5.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.transport@6c02b9db76ef)
+    com.unity.collections@2.5.1 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.collections@56bff8827a7e)
+    com.unity.services.qos@1.3.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.services.qos@f4a3648d24d3)
+    com.unity.services.core@1.14.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.services.core@9e81a5e38245)
+    com.unity.services.wire@1.4.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.services.wire@2d36cce58c62)
+    com.unity.services.deployment@1.3.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.services.deployment@0991a9c9ce0d)
+    com.unity.nuget.newtonsoft-json@3.2.1 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0)
+    com.unity.services.authentication@3.4.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.services.authentication@f6045b608d0a)
+    com.unity.nuget.mono-cecil@1.11.4 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.nuget.mono-cecil@d6f9955a5d5f)
+    com.unity.burst@1.8.19 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.burst@7a907cf5a459)
+    com.unity.mathematics@1.3.2 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.mathematics@8017b507cc74)
+    com.unity.profiling.core@1.0.2 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.profiling.core@aac7b93912bc)
+    com.meta.xr.sdk.core@85.0.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.meta.xr.sdk.core@f8b4cfb2789f)
+    com.meta.xr.sdk.interaction@85.0.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.meta.xr.sdk.interaction@0a0b3efbe99d)
+    com.unity.services.deployment.api@1.0.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.services.deployment.api@e87c554599f0)
+    com.unity.test-framework.performance@3.0.3 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.test-framework.performance@fb0dc592af8b)
+    com.unity.searcher@4.9.3 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.searcher@1e17ce91558d)
+  Built-in packages:
+    com.unity.multiplayer.center@1.0.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.multiplayer.center@f3fb577b3546)
+    com.unity.render-pipelines.universal@17.0.3 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.render-pipelines.universal@0b68ece7aa54)
+    com.unity.ugui@2.0.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.ugui@03407c6d8751)
+    com.unity.modules.accessibility@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.accessibility)
+    com.unity.modules.ai@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ai)
+    com.unity.modules.androidjni@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.androidjni)
+    com.unity.modules.animation@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.animation)
+    com.unity.modules.assetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.assetbundle)
+    com.unity.modules.audio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.audio)
+    com.unity.modules.cloth@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.cloth)
+    com.unity.modules.director@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.director)
+    com.unity.modules.imageconversion@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imageconversion)
+    com.unity.modules.imgui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.imgui)
+    com.unity.modules.jsonserialize@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.jsonserialize)
+    com.unity.modules.particlesystem@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.particlesystem)
+    com.unity.modules.physics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics)
+    com.unity.modules.physics2d@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.physics2d)
+    com.unity.modules.screencapture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.screencapture)
+    com.unity.modules.terrain@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrain)
+    com.unity.modules.terrainphysics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.terrainphysics)
+    com.unity.modules.tilemap@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.tilemap)
+    com.unity.modules.ui@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.ui)
+    com.unity.modules.uielements@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.uielements)
+    com.unity.modules.umbra@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.umbra)
+    com.unity.modules.unityanalytics@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unityanalytics)
+    com.unity.modules.unitywebrequest@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequest)
+    com.unity.modules.unitywebrequestassetbundle@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestassetbundle)
+    com.unity.modules.unitywebrequestaudio@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestaudio)
+    com.unity.modules.unitywebrequesttexture@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequesttexture)
+    com.unity.modules.unitywebrequestwww@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.unitywebrequestwww)
+    com.unity.modules.vehicles@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vehicles)
+    com.unity.modules.video@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.video)
+    com.unity.modules.vr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.vr)
+    com.unity.modules.wind@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.wind)
+    com.unity.modules.xr@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.xr)
+    com.unity.modules.subsystems@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.subsystems)
+    com.unity.modules.hierarchycore@1.0.0 (location: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.modules.hierarchycore)
+    com.unity.render-pipelines.core@17.0.3 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.render-pipelines.core@38fdc9b96878)
+    com.unity.shadergraph@17.0.3 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.shadergraph@afc42d8f5d23)
+    com.unity.render-pipelines.universal-config@17.0.3 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.render-pipelines.universal-config@fa63c96d3e1a)
+    com.unity.textmeshpro@5.0.0 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.textmeshpro@53f43edfd2e0)
+    com.unity.rendering.light-transport@1.0.1 (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.rendering.light-transport@307bc27a498f)
+  Git packages:
+    com.meta.xr.sdk.movement@https://github.com/oculus-samples/Unity-Movement.git (location: C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.meta.xr.sdk.movement@cc87d601514a)
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+[Subsystems] Looking for new subsystems at path C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.xr.openxr@3903c1059bcf
+[Subsystems] Novel subsystem found at Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Danie/OneDrive/Documentos/Faculdade/Projeto IC/Unity/testeMultiplayer3.0/Assets
+[Subsystems] Discovering subsystems at path C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.xr.openxr@3903c1059bcf
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json.
+Package Manager log level set to [2]
+[Package Manager] Done registering packages in 0.09 seconds
+[Licensing::Client] Successfully resolved entitlement details
+Refreshing native plugins compatible for Editor in 10.08 ms, found 16 plugins.
+Preloading 2 native plugins for Editor in 1.60 ms.
+Initialize engine version: 6000.0.39f1 (15ea7ed0b100)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path C:/Users/Danie/OneDrive/Documentos/Faculdade/Projeto IC/Unity/testeMultiplayer3.0/Assets
+[Subsystems] Discovering subsystems at path C:\Users\Danie\OneDrive\Documentos\Faculdade\Projeto IC\Unity\testeMultiplayer3.0\Library\PackageCache\com.unity.xr.openxr@3903c1059bcf
+[Subsystems] No descriptors matched for  examples in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json.
+[Subsystems] 1 'inputs' descriptors matched in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] 1 'displays' descriptors matched in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json
+[Subsystems] No descriptors matched for  meshings in Library/PackageCache/com.unity.xr.openxr@3903c1059bcf/Runtime/UnitySubsystemsManifest.json.
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 4060 (ID=0x2882)
+    Vendor:   NVIDIA
+    VRAM:     7956 MB
+    Driver:   32.0.15.9579
+[Licensing::Client] Successfully resolved entitlement details
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56464
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+Using cacheserver namespaces - metadata:defaultmetadata, artifacts:defaultartifacts
+ImportWorker Server TCP listen port: 0
+AcceleratorClientConnectionCallback - disconnected - :0
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/6000.0.39f1/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll
+Registered in 0.002485 seconds.
+- Loaded All Assemblies, in  0.255 seconds
+Native extension for Android target not found
+Android Extension - Scanning For ADB Devices 2168 ms
+Native extension for WindowsStandalone target not found
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  2.405 seconds
+Domain Reload Profiling: 2659ms
+	BeginReloadAssembly (84ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (0ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (0ms)
+	RebuildCommonClasses (24ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (33ms)
+	LoadAllAssembliesAndSetupDomain (105ms)
+		LoadAssemblies (82ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (103ms)
+			TypeCache.Refresh (102ms)
+				TypeCache.ScanAssembly (93ms)
+			BuildScriptInfoCaches (0ms)
+			ResolveRequiredComponents (0ms)
+	FinalizeReload (2406ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (2380ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (2225ms)
+			SetLoadedEditorAssemblies (3ms)
+			BeforeProcessingInitializeOnLoad (33ms)
+			ProcessInitializeOnLoadAttributes (73ms)
+			ProcessInitializeOnLoadMethodAttributes (45ms)
+			AfterProcessingInitializeOnLoad (0ms)
+			EditorAssembliesLoaded (0ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (0ms)
+[Licensing::Client] Successfully resolved entitlement details
+[Licensing::Client] Successfully resolved entitlement details
+Application.AssetDatabase Initial Refresh Start
+[ScriptCompilation] Requested script compilation because: Assetdatabase observed changes in script compilation related files
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/Danie/OneDrive/Documentos/Faculdade/Projeto IC/Unity/testeMultiplayer3.0
+DisplayProgressbar: Compiling Scripts
+ExitCode: 4 Duration: 0s317ms
+Rebuilding DAG because FileSignature timestamp changed: Library/Bee/1300b0aE-inputdata.json
+[1753/2363  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra requires additional run (0.30 seconds), 1 items updated, 1752 evaluated
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Tools\netcorerun\netcorerun.exe "C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\Tools\BuildPipeline\ScriptCompilationBuildProgram.exe" "Library/Bee/1300b0aE.dag.json" "Library/Bee/1300b0aE-inputdata.json" "Library\Bee\buildprogram0.traceevents"
+WorkingDir: C:/Users/Danie/OneDrive/Documentos/Faculdade/Projeto IC/Unity/testeMultiplayer3.0
+ExitCode: 0 Duration: 1s397ms
+Starting: C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\bee_backend.exe --dont-print-to-structured-log --ipc --defer-dag-verification --dagfile="Library/Bee/1300b0aE.dag" --continue-on-failure --dagfilejson="Library\Bee\1300b0aE.dag.json" --profile="Library/Bee/backend2.traceevents" ScriptAssemblies
+WorkingDir: C:/Users/Danie/OneDrive/Documentos/Faculdade/Projeto IC/Unity/testeMultiplayer3.0
+ExitCode: 0 Duration: 3s372ms
+Finished compiling graph: 2367 nodes, 57315 flattened edges (40789 ToBuild, 422 ToUse), maximum node priority 3855
+[1162/2363  0s] WriteText Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp-Editor.rsp
+[1752/2363  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+[2359/2363  1s] Csc Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp-Editor.dll (+2 others)
+[2360/2363  1s] ILPostProcess Library/Bee/artifacts/1300b0aE.dag/post-processed/Assembly-CSharp-Editor.dll (+pdb)
+Processing assembly Library/Bee/artifacts/1300b0aE.dag/Assembly-CSharp-Editor.dll, with 141 defines and 436 references
+
+processors: Unity.Jobs.CodeGen.JobsILPostProcessor, Unity.Multiplayer.Tools.NetStats.CodeGen.AssemblyProcessorMain, Unity.Netcode.Editor.CodeGen.INetworkMessageILPP, Unity.Netcode.Editor.CodeGen.INetworkSerializableILPP, Unity.Netcode.Editor.CodeGen.NetworkBehaviourILPP, Unity.Netcode.Editor.CodeGen.RuntimeAccessModifiersILPP, zzzUnity.Burst.CodeGen.BurstILPostProcessor
+
+running Unity.Jobs.CodeGen.JobsILPostProcessor
+
+running Unity.Multiplayer.Tools.NetStats.CodeGen.AssemblyProcessorMain
+
+running Unity.Netcode.Editor.CodeGen.INetworkMessageILPP
+
+running Unity.Netcode.Editor.CodeGen.INetworkSerializableILPP
+
+running Unity.Netcode.Editor.CodeGen.NetworkBehaviourILPP
+
+running Unity.Netcode.Editor.CodeGen.RuntimeAccessModifiersILPP
+
+running zzzUnity.Burst.CodeGen.BurstILPostProcessor
+[2361/2363  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.pdb
+[2362/2363  0s] CopyFiles Library/ScriptAssemblies/Assembly-CSharp-Editor.dll
+*** Tundra build success (3.36 seconds), 6 items updated, 2363 evaluated
+AssetDatabase: script compilation time: 5.470461s
+Begin MonoManager ReloadAssembly
+- Loaded All Assemblies, in  0.844 seconds
+Script 'CharacterController' has the same name as built-in Unity component.
+AddComponent and GetComponent will not work with this script.
+'Packages/com.meta.xr.sdk.core/Editor/BuildingBlocks/BlocksWindowCollectionsPageExtension.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.meta.xr.sdk.core/Editor/BuildingBlocks/BlocksWindowDetailsExtension.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+'Packages/com.meta.xr.sdk.core/Editor/BuildingBlocks/BlocksWindow.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
+Start importing Assets/Editor using Guid(af1bbde3e87f48a4cbb28f13f3f7d1bf) (DefaultImporter) -> (artifact id: 'bb59c63c1a754a8402937b6173e98302') in 0.0177458 seconds
+Refreshing native plugins compatible for Editor in 7.31 ms, found 16 plugins.
+Native extension for Android target not found
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 7.25 ms, found 16 plugins.
+Mono: successfully reloaded assembly
+- Finished resetting the current domain, in  3.352 seconds
+Domain Reload Profiling: 4190ms
+	BeginReloadAssembly (218ms)
+		ExecutionOrderSort (0ms)
+		DisableScriptedObjects (8ms)
+		BackupInstance (0ms)
+		ReleaseScriptingObjects (0ms)
+		CreateAndSetChildDomain (125ms)
+	RebuildCommonClasses (22ms)
+	RebuildNativeTypeToScriptingClass (7ms)
+	initialDomainReloadingComplete (33ms)
+	LoadAllAssembliesAndSetupDomain (557ms)
+		LoadAssemblies (324ms)
+		RebuildTransferFunctionScriptingTraits (0ms)
+		AnalyzeDomain (294ms)
+			TypeCache.Refresh (186ms)
+				TypeCache.ScanAssembly (170ms)
+			BuildScriptInfoCaches (91ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (3352ms)
+		ReleaseScriptCaches (0ms)
+		RebuildScriptCaches (0ms)
+		SetupLoadedEditorAssemblies (3212ms)
+			LogAssemblyErrors (0ms)
+			InitializePlatformSupportModulesInManaged (17ms)
+			SetLoadedEditorAssemblies (5ms)
+			BeforeProcessingInitializeOnLoad (139ms)
+			ProcessInitializeOnLoadAttributes (2859ms)
+			ProcessInitializeOnLoadMethodAttributes (189ms)
+			AfterProcessingInitializeOnLoad (3ms)
+			EditorAssembliesLoaded (1ms)
+		ExecutionOrderSort2 (0ms)
+		AwakeInstancesAfterBackupRestoration (5ms)
+Refreshing native plugins compatible for Editor in 8.09 ms, found 16 plugins.
+Preloading 2 native plugins for Editor in 0.11 ms.
+Asset Pipeline Refresh (id=23da2c7e6c52bd347a624ee861445940): Total: 12.106 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+	Summary:
+		Imports: total=1 (actual=1, local cache=0, cache server=0)
+		Asset DB Process Time: managed=2 ms, native=4094 ms
+		Asset DB Callback time: managed=1505 ms, native=13 ms
+		Scripting: domain reloads=1, domain reload time=930 ms, compile time=5472 ms, other=87 ms
+		Project Asset Count: scripts=3367, non-scripts=4957
+		Asset File Changes: new=2, changed=2, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokeCustomDependenciesCallbacks: 0.001ms
+	InvokePackagesCallback: 1.333ms
+	ApplyChangesToAssetFolders: 0.357ms
+	Scan: 299.384ms
+	OnSourceAssetsModified: 0.672ms
+	CategorizeAssetsWithTransientArtifact: 59.764ms
+	ProcessAssetsWithTransientArtifactChanges: 104.553ms
+	CategorizeAssets: 74.858ms
+	ImportOutOfDateAssets: 3401.625ms (-2095.056ms without children)
+		ImportManagerImport: 21.327ms (3.315ms without children)
+			ImportInProcess: 17.996ms
+			UpdateCategorizedAssets: 0.016ms
+		CompileScripts: 5471.654ms
+		ReloadNativeAssets: 0.028ms
+		UnloadImportedAssets: 1.891ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 1.276ms
+		InitializingProgressBar: 0.000ms
+		PostProcessAllAssetNotificationsAddChangedAssets: 0.000ms
+		OnDemandSchedulerStart: 0.504ms
+	PostProcessAllAssets: 1507.052ms
+	Hotreload: 11.330ms
+	GatherAllCurrentPrimaryArtifactRevisions: 0.001ms
+	UnloadStreamsBegin: 1.097ms
+	PersistCurrentRevisions: 0.276ms
+	UnloadStreamsEnd: 0.001ms
+	GenerateScriptTypeHashes: 9.099ms
+	Untracked: 6643.505ms
+
+Application.AssetDatabase Initial Refresh End
+Shader 'Oculus/OVRMRCameraFrameLit': fallback shader 'Alpha-Diffuse' not found
+Scanning for USB devices : 3.692ms
+Initializing Unity extensions:
+[Licensing::Client] Successfully resolved entitlement details
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+[MODES] Loading mode Default (0) for mode-current-id-testeMultiplayer3.0
+Unloading 305 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 11795 unused Assets / (15.5 MB). Loaded Objects now: 14189.
+Memory consumption went from 485.7 MB to 470.2 MB.
+Total: 16.498000 ms (FindLiveObjects: 0.851800 ms CreateObjectMapping: 0.619900 ms MarkObjects: 9.712200 ms  DeleteObjects: 5.313200 ms)
+
+Starting UI Merge into TesteVoz...
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:10)
+
+(Filename: Assets/Editor/MergeUIHelper.cs Line: 10)
+
+Opening scene 'Assets/Scenes/TesteVoz.unity'
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+The tree rock_02 couldn't be instanced because the prefab contains no valid mesh renderer.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Env_Tree_014 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Env_Flower_05 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Generic_Tree_02 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree rock_01 couldn't be instanced because the prefab contains no valid mesh renderer.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Env_Flower_07 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Generic_Grass_Patch_01 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree Plant couldn't be instanced because the prefab contains no valid mesh renderer.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree StoneLantern must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.01 seconds
+The tree SM_Env_Bush_04 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Generic_Grass_Patch_02 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Generic_Small_Rocks_03 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree Vase 5 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree Chair_01 couldn't be instanced because the prefab contains no valid mesh renderer.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Prop_Table_02 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+The tree SM_Prop_ShopInterior_Table_01 must use the Nature/Soft Occlusion shader. Otherwise billboarding/lighting will not work correctly.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:13)
+
+[Assets/Editor/MergeUIHelper.cs line 13]
+
+Loaded scene 'Assets/Scenes/TesteVoz.unity'
+	Deserialize:            4.672 ms
+	Integration:            584.249 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.009 ms
+	Total Operation Time:   588.932 ms
+Unloading 8 unused Assets / (3.3 KB). Loaded Objects now: 27032.
+Memory consumption went from 0.50 GB to 0.50 GB.
+Total: 12.479200 ms (FindLiveObjects: 1.456500 ms CreateObjectMapping: 0.994300 ms MarkObjects: 9.962400 ms  DeleteObjects: 0.065100 ms)
+
+Opening scene 'Assets/Scenes/testeConectaIpAutomatico.unity additively'
+Only one instance of OVRCameraRig should be created at once!
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogError (object)
+OVRCameraRig:Awake () (at ./Library/PackageCache/com.meta.xr.sdk.core@f8b4cfb2789f/Scripts/OVRCameraRig.cs:221)
+UnityEditor.SceneManagement.EditorSceneManager:OpenScene (string,UnityEditor.SceneManagement.OpenSceneMode)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:16)
+
+(Filename: ./Library/PackageCache/com.meta.xr.sdk.core@f8b4cfb2789f/Scripts/OVRCameraRig.cs Line: 221)
+
+Loaded scene 'Assets/Scenes/testeConectaIpAutomatico.unity'
+	Deserialize:            21.449 ms
+	Integration:            87.117 ms
+	Integration of assets:  1.216 ms
+	Thread Wait Time:       0.035 ms
+	Total Operation Time:   109.817 ms
+Moved Canvas to TesteVoz.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:27)
+
+(Filename: Assets/Editor/MergeUIHelper.cs Line: 27)
+
+Moved EventSystem to TesteVoz.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:27)
+
+(Filename: Assets/Editor/MergeUIHelper.cs Line: 27)
+
+Moved Manual Connector to TesteVoz.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:27)
+
+(Filename: Assets/Editor/MergeUIHelper.cs Line: 27)
+
+Start importing Assets/Scenes/TesteVoz.unity using Guid(68592c2519deb89409a59ad269a8ef11) (DefaultImporter) -> (artifact id: '986df87480374ae6cdd4db59e2eaa5e8') in 0.0008887 seconds
+Refreshing native plugins compatible for Editor in 7.03 ms, found 16 plugins.
+Preloading 2 native plugins for Editor in 0.10 ms.
+Asset Pipeline Refresh (id=3336745874590b741b8e0cad4b4489d4): Total: 0.074 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Successfully saved TesteVoz with new UI!
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace ()
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+MergeUIHelper:ExecuteMerge () (at Assets/Editor/MergeUIHelper.cs:49)
+
+(Filename: Assets/Editor/MergeUIHelper.cs Line: 49)
+
+Killing ADB server in 0,029682 seconds.
+[Physics::Module] Cleanup current backned.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input System polling thread exited.
+Input System module state changed to: Shutdown.
+[Licensing::IpcConnector] License Notification channel disconnected successfully.
+[Licensing::IpcConnector] License Client channel disconnected successfully.
+AcceleratorClientConnectionCallback - disconnected - :0
+Cleanup mono
+Checking for leaked weakptr:
+  Found no leaked weakptrs.
+[Package Manager] Server process was shutdown
+##utp:{"type":"MemoryLeaks","version":2,"phase":"Immediate","time":1776385014415,"processId":28464,"allocatedMemory":19186393,"memoryLabels":[{"Default":26485},{"Permanent":15356},{"NewDelete":82537},{"Thread":4230344},{"Manager":33146},{"VertexData":104},{"Geometry":816},{"Texture":160},{"Shader":78795},{"Material":24},{"GfxDevice":55208},{"Animation":328},{"Audio":4040},{"FontEngine":256},{"Physics":1241},{"Serialization":968},{"Input":14824},{"JobScheduler":33424},{"TextLib":32},{"Mono":32},{"ScriptingNativeRuntime":155060},{"BaseObject":1619920},{"Resource":1304},{"Renderer":2928},{"Transform":4646},{"File":15637},{"WebCam":752},{"Culling":32},{"Terrain":11394},{"Wind":24},{"STL":40},{"String":12734},{"DynamicArray":179399},{"HashMap":107679},{"Utility":2665726},{"Curl":48},{"PoolAlloc":1912},{"AI":104},{"TypeTree":5005},{"ScriptManager":512},{"RuntimeInitializeOnLoadManager":64},{"SpriteAtlas":112},{"GI":7888},{"Director":8240},{"CloudService":7232},{"WebRequest":6135},{"VR":46249},{"SceneManager":496},{"Video":64},{"LazyScriptCache":32},{"NativeArray":8},{"Camera":17},{"Secure":1},{"SerializationCache":1576},{"APIUpdating":10320},{"Subsystems":48},{"VirtualTexturing":57888},{"StaticSafetyDebugInfo":278528},{"Analytics":560},{"Hierarchy":272},{"Gui":80},{"EditorUtility":128311},{"VersionControl":4},{"Undo":947},{"AssetDatabase":9213401},{"EditorGi":328},{"UnityConnect":24184},{"Upm":1996},{"DrivenProperties":72},{"LocalIPC":262},{"ProfilerEditor":9738},{"CoreBusinessMetrics":14676},{"Licensing":3624},{"AssetReference":32},{"IPCStream":32}]}
