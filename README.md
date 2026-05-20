@@ -1,0 +1,33 @@
+# Projeto de Iniciação Científica - Unity + VR 
+
+Projeto desenvolvido em Unity para exploração de ambientes virtuais, integrando chat de voz e rastreamento de movimento em rede local (LAN).
+
+**Instituição:** Universidade Federal de Lavras (UFLA)
+**Equipe:** Daniel Reis, Nina, Thales e Gabriel
+
+---
+
+## Como baixar e rodar o projeto:
+1. Clone este repositório no seu computador:
+   `git clone https://github.com/danielreissss/Projeto-VR.git`
+2. Abra o Unity Hub e adicione o projeto a partir do disco.
+3. **Aviso Importante:** A pasta `Library` está ignorada no repositório para economizar espaço. Ao abrir o projeto pela primeira vez, o Unity recriará essa pasta automaticamente (pode demorar alguns minutos).
+
+---
+
+##  Fluxo de Trabalho (Branches):
+Nunca trabalhe diretamente na branch `main`. Utilize a branch com o seu nome para desenvolver e testar suas alterações de forma isolada:
+* `main` (Estável - Apenas para testes finais no Quest 3 e laboratório)
+* `daniel` (Desenvolvimento)
+* `thales` (Desenvolvimento)
+* `gabriel` (Desenvolvimento)
+
+Para mudar para a sua branch antes de programar, rode no terminal:
+`git checkout [seu-nome]`
+
+---
+
+## Configuração de Rede para Testes LAN:
+Para que o chat de voz e o rastreamento funcionem entre o PC e o Quest 3:
+1. Certifique-se de que o PC (Host) e o Quest 3 (Client) estão na mesma rede Wi-Fi.
+2. Adicione uma exceção no Firewall do Windows para o Unity Editor (Rede Privada e Pública) ou desative temporariamente o Firewall de Rede Privada.
