@@ -39,6 +39,7 @@ O computador do laboratório já possui o **GitHub Desktop** (interface visual) 
 Nunca trabalhe diretamente na branch `main`. Utilize a branch com o seu nome para desenvolver e testar suas alterações de forma isolada:
 * `main` (Estável - Apenas para testes finais no Quest 3 e laboratório)
 * `daniel` (Desenvolvimento)
+* `nina` (Desenvolvimento)
 * `thales` (Desenvolvimento)
 * `gabriel` (Desenvolvimento)
 
