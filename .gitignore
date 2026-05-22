@@ -46,3 +46,6 @@ crashlytics-build.properties
 /[Uu]tmp/
 .utmp/
 
+# Builds e Pacotes Android
+*.apk
+*.aab
