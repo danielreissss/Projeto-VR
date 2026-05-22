@@ -1,0 +1,51 @@
+# Unity generated folders
+Library/
+Temp/
+Obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+MemoryCaptures/
+
+# Unity asset meta files (optional, keep for team projects)
+# *.meta
+
+# Unity cache
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Visual Studio / Rider cache
+.vs/
+.idea/
+*.csproj
+*.sln
+*.user
+*.suo
+*.userprefs
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Crashlytics
+crashlytics-build.properties
+
+# JetBrains
+*.csproj.user
+
+# Burst Compiler
+*_BurstDebugInformation_DoNotShip/
+
+# Temporary / compiled files
+/[Uu]tmp/
+.utmp/
+
+# Builds e Pacotes Android
+*.apk
+*.aab
