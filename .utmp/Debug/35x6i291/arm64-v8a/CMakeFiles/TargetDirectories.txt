@@ -1,5 +1,0 @@
-E:/testeMultiplayer3.0/.utmp/Debug/35x6i291/arm64-v8a/CMakeFiles/edit_cache.dir
-E:/testeMultiplayer3.0/.utmp/Debug/35x6i291/arm64-v8a/CMakeFiles/rebuild_cache.dir
-E:/testeMultiplayer3.0/.utmp/Debug/35x6i291/arm64-v8a/GameActivity/CMakeFiles/game.dir
-E:/testeMultiplayer3.0/.utmp/Debug/35x6i291/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
-E:/testeMultiplayer3.0/.utmp/Debug/35x6i291/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir

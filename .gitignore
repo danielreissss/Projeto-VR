@@ -41,3 +41,8 @@ crashlytics-build.properties
 
 # Burst Compiler
 *_BurstDebugInformation_DoNotShip/
+
+# Temporary / compiled files
+/[Uu]tmp/
+.utmp/
+
