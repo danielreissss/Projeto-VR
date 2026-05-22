@@ -1,9 +1,10 @@
+﻿using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Teste rápido — attach em qualquer GameObject, dê Play no Editor.
-/// Confirma se o microfone está capturando áudio sem precisar do Quest ou de rede.
-/// REMOVA da cena após o teste.
+/// Teste rapido - attach em qualquer GameObject, de Play no Editor.
+/// Confirma se o microfone esta capturando audio sem precisar do Quest ou de rede.
+/// REMOVA da cena apos o teste.
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class MicTest : MonoBehaviour
@@ -11,12 +12,12 @@ public class MicTest : MonoBehaviour
     private AudioSource _audio;
     private AudioClip   _clip;
 
-    private void Start()
+    private IEnumerator Start()
     {
         if (Microphone.devices.Length == 0)
         {
             Debug.LogError("[MicTest] Nenhum microfone encontrado!");
-            return;
+            yield break;
         }
 
         string mic = Microphone.devices[0];
@@ -27,11 +28,14 @@ public class MicTest : MonoBehaviour
         _audio.clip = _clip;
         _audio.loop = true;
 
-        // Aguarda o mic iniciar e reproduz o que captura (loopback)
-        while (Microphone.GetPosition(mic) <= 0) { }
+        // Aguarda o mic iniciar de forma assincrona (evita travar a main thread do Unity/Oculus Quest)
+        while (Microphone.GetPosition(mic) <= 0) 
+        {
+            yield return null; 
+        }
+        
         _audio.Play();
-
-        Debug.Log("[MicTest] Reproduzindo microfone em loopback. Fale e você vai se ouvir!");
+        Debug.Log("[MicTest] Reproduzindo microfone em loopback. Fale e voce vai se ouvir!");
     }
 
     private void Update()
@@ -39,14 +43,17 @@ public class MicTest : MonoBehaviour
         // Loga volume RMS a cada 60 frames
         if (_clip == null || Time.frameCount % 60 != 0) return;
 
+        int pos = Microphone.GetPosition(null);
+        if (pos < 480) return; // Evita out of bounds se a gravacao acabou de comecar
+
         float[] data = new float[480];
-        _clip.GetData(data, Microphone.GetPosition(null) - 480);
+        _clip.GetData(data, pos - 480);
 
         float rms = 0f;
         foreach (var s in data) rms += s * s;
         rms = Mathf.Sqrt(rms / data.Length);
 
-        Debug.Log($"[MicTest] Volume RMS: {rms:F4} {(rms > 0.01f ? "✔ CAPTANDO" : "— silencioso")}");
+        Debug.Log($"[MicTest] Volume RMS: {rms:F4} {(rms > 0.01f ? "CAPTANDO AUDIO" : "Silencioso")}");
     }
 
     private void OnDestroy()

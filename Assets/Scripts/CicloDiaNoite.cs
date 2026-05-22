@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 [ExecuteAlways]
@@ -6,7 +6,7 @@ public class CicloDiaNoite : MonoBehaviour
 {
     public Light sol;
 
-    [Header("Configuração de Tempo")]
+    [Header("Configuracao de Tempo")]
     public bool usarTempoReal = true;
 
     [Range(0, 24)]
@@ -22,6 +22,8 @@ public class CicloDiaNoite : MonoBehaviour
     [Header("Intensidade da Luz Solar")]
     public AnimationCurve intensidadeDoSol;
 
+    private float ultimaHoraRegistrada = -1f;
+
     void Reset()
     {
         // Inicializa o Gradient (cor da luz ao longo do dia)
@@ -31,7 +33,7 @@ public class CicloDiaNoite : MonoBehaviour
         colorKeys[0] = new GradientColorKey(new Color(0.05f, 0.05f, 0.2f), 0f);    // 00:00 - noite escura
         colorKeys[1] = new GradientColorKey(new Color(1f, 0.5f, 0.2f), 0.25f);     // 06:00 - amanhecer
         colorKeys[2] = new GradientColorKey(new Color(1f, 1f, 0.9f), 0.5f);        // 12:00 - dia
-        colorKeys[3] = new GradientColorKey(new Color(1f, 0.5f, 0.2f), 0.75f);     // 18:00 - pôr do sol
+        colorKeys[3] = new GradientColorKey(new Color(1f, 0.5f, 0.2f), 0.75f);     // 18:00 - por do sol
         colorKeys[4] = new GradientColorKey(new Color(0.05f, 0.05f, 0.2f), 1f);    // 24:00 - noite escura
 
         GradientAlphaKey[] alphaKeys = new GradientAlphaKey[2];
@@ -52,18 +54,23 @@ public class CicloDiaNoite : MonoBehaviour
 
     void Update()
     {
-        // Atualiza a hora com base na opção
+        // Atualiza a hora com base na opcao
         if (usarTempoReal)
         {
             DateTime agora = DateTime.Now;
-            horaDoDia = agora.Hour + agora.Minute / 60f;
+            horaDoDia = agora.Hour + agora.Minute / 60f + agora.Second / 3600f;
         }
         else
         {
             horaDoDia = horaCustomizada;
         }
 
-        AtualizarSol(horaDoDia);
+        // Otimizacao: Apenas atualiza as propriedades da luz se a hora mudou significativamente (reduz uso de CPU no Editor/Mobile)
+        if (!Mathf.Approximately(horaDoDia, ultimaHoraRegistrada))
+        {
+            AtualizarSol(horaDoDia);
+            ultimaHoraRegistrada = horaDoDia;
+        }
     }
 
     void AtualizarSol(float hora)
