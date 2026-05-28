@@ -50,8 +50,20 @@ public class VoiceReceiver : MonoBehaviour
         _audioSource.clip         = _streamClip;
         _audioSource.loop         = true;
         _audioSource.volume       = 1f;
-        _audioSource.spatialBlend = 1f;   // 3D — mude para 0 se quiser som 2D
-        _audioSource.spatialize   = true; // Ativa espacialização de hardware (Oculus Spatializer)
+        
+        // --- AJUSTES DE SEGURANÇA E DEBUG ---
+        _audioSource.spatialBlend = 1f; // 3D - Mude para 0f se quiser testar em modo 2D absoluto.
+        _audioSource.rolloffMode  = AudioRolloffMode.Linear;
+        _audioSource.minDistance  = 1.5f;   // Volume máximo até 1.5m
+        _audioSource.maxDistance  = 40.0f;  // Perfeitamente audível até 40m
+
+        // Desativa a espacialização nativa da Meta no Unity Editor do PC para evitar silêncio completo
+#if UNITY_ANDROID && !UNITY_EDITOR
+        _audioSource.spatialize = true; // Ativa no Quest 3
+#else
+        _audioSource.spatialize = false; // Desativa no PC Editor para testes seguros
+#endif
+
         _audioSource.Play();
 
         // Write pointer começa com margem na frente do read pointer

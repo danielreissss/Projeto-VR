@@ -131,11 +131,22 @@ public class VoiceManager : MonoBehaviour
         {
             foreach (var kvp in nm.SpawnManager.SpawnedObjects)
             {
-                if (kvp.Value != null && kvp.Value.IsSpawned && !_trackedObjectIds.Contains(kvp.Key))
+                var netObj = kvp.Value;
+                if (netObj == null || !netObj.IsSpawned) continue;
+
+                bool hasSender = netObj.GetComponent<VoiceSender>() != null;
+                bool hasReceiver = netObj.GetComponent<VoiceReceiver>() != null;
+                bool alreadyConfigured = hasSender || hasReceiver;
+
+                if (!_trackedObjectIds.Contains(kvp.Key) || !alreadyConfigured)
                 {
-                    _trackedObjectIds.Add(kvp.Key);
+                    if (!_trackedObjectIds.Contains(kvp.Key))
+                    {
+                        _trackedObjectIds.Add(kvp.Key);
+                    }
+                    
                     // Como Unity inicializa componentes dinamicamente, aguardamos 1 frame
-                    StartCoroutine(WaitAndTryAddComponents(kvp.Value));
+                    StartCoroutine(WaitAndTryAddComponents(netObj));
                 }
             }
         }
@@ -177,6 +188,13 @@ public class VoiceManager : MonoBehaviour
         reader.ReadBytesSafe(ref encoded, dataLen);
 
         var nm = NetworkManager.Singleton;
+        if (nm == null) return;
+
+        // Log de diagnóstico frequente (1 a cada 50 pacotes para não inundar o console)
+        if (UnityEngine.Random.Range(0, 50) == 0)
+        {
+            Debug.Log($"[VoiceManager] [DIAGNÓSTICO] Pacote recebido de {senderClientId}. Origem do áudio: {originClientId}. Tamanho: {dataLen} bytes. Sou Server/Host? {nm.IsServer}. Meu LocalID: {nm.LocalClientId}");
+        }
 
         // 1. RELAY DO SERVIDOR: Se eu sou o Host/Server, repasso o áudio para os clientes
         if (nm.IsServer)
@@ -198,24 +216,52 @@ public class VoiceManager : MonoBehaviour
         // 2. REPRODUÇÃO LOCAL: ignorar eco (não reproduzir a voz do próprio cliente)
         if (originClientId == nm.LocalClientId)
         {
-            // Debug.Log("[VoiceManager] Ignorando pacote de voz da própria origem (eco evitado).");
             return;
         }
 
+        bool foundAvatar = false;
         if (nm.SpawnManager != null && nm.SpawnManager.SpawnedObjects != null)
         {
             foreach (var netObj in nm.SpawnManager.SpawnedObjects.Values.ToList())
             {
                 if (netObj.OwnerClientId == originClientId)
                 {
+                    foundAvatar = true;
                     var receiver = netObj.GetComponent<VoiceReceiver>();
                     if (receiver != null)
+                    {
                         receiver.ReceivePacket(originClientId, encoded);
+                    }
                     else
-                        Debug.LogWarning($"[VoiceManager] Pacote de {originClientId} recebido mas sem VoiceReceiver no avatar! Rode ScanAllNetworkObjects.");
+                    {
+                        Debug.LogWarning($"[VoiceManager] [AUTO-REPAIR] Pacote de {originClientId} recebido, avatar '{netObj.name}' encontrado, MAS NÃO TEM VoiceReceiver! Adicionando dinamicamente...");
+                        TryAddVoiceComponents(netObj);
+                        receiver = netObj.GetComponent<VoiceReceiver>();
+                        if (receiver != null)
+                        {
+                            receiver.ReceivePacket(originClientId, encoded);
+                        }
+                        else
+                        {
+                            Debug.LogError($"[VoiceManager] Falha ao adicionar VoiceReceiver dinamicamente ao avatar '{netObj.name}'!");
+                        }
+                    }
                     break;
                 }
             }
+        }
+
+        if (!foundAvatar)
+        {
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            if (nm.SpawnManager != null && nm.SpawnManager.SpawnedObjects != null)
+            {
+                foreach (var netObj in nm.SpawnManager.SpawnedObjects.Values)
+                {
+                    sb.Append($"[{netObj.name}: Owner={netObj.OwnerClientId}, IsPlayer={IsPlayerObject(netObj)}, Active={netObj.gameObject.activeInHierarchy}] ");
+                }
+            }
+            Debug.LogError($"[VoiceManager] [FALHA DE ASSOCIAÇÃO] Pacote recebido com origem {originClientId}, mas nenhum avatar com OwnerClientId correspondente foi encontrado na cena! Avatares rastreados na cena: {sb.ToString()}");
         }
     }
 
