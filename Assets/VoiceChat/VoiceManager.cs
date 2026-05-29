@@ -123,7 +123,7 @@ public class VoiceManager : MonoBehaviour
         {
             nm.CustomMessagingManager.RegisterNamedMessageHandler(messageName, OnGlobalVoicePacketReceived);
             _handlerRegistered = true;
-            Debug.Log($"[VoiceManager] Handler global registrado para '{messageName}'");
+            Debug.Log($"[VoiceManager] Handler global registrado para '{messageName}'. IsServer={nm.IsServer}, IsClient={nm.IsClient}, LocalClientId={nm.LocalClientId}");
         }
 
         // Polling contínuo de baixo custo para detectar novos objetos assim que nascem (sem race-conditions)
@@ -190,11 +190,6 @@ public class VoiceManager : MonoBehaviour
         var nm = NetworkManager.Singleton;
         if (nm == null) return;
 
-        // Log de diagnóstico frequente (1 a cada 50 pacotes para não inundar o console)
-        if (UnityEngine.Random.Range(0, 50) == 0)
-        {
-            Debug.Log($"[VoiceManager] [DIAGNÓSTICO] Pacote recebido de {senderClientId}. Origem do áudio: {originClientId}. Tamanho: {dataLen} bytes. Sou Server/Host? {nm.IsServer}. Meu LocalID: {nm.LocalClientId}");
-        }
 
         // 1. RELAY DO SERVIDOR: Se eu sou o Host/Server, repasso o áudio para os clientes
         if (nm.IsServer)
@@ -205,8 +200,8 @@ public class VoiceManager : MonoBehaviour
 
             foreach (ulong targetId in nm.ConnectedClientsIds.ToList())
             {
-                // Não reenvia para quem originou nem para quem enviou ao servidor
-                if (targetId == senderClientId || targetId == originClientId) continue;
+                // Não reenvia para quem originou, para quem enviou ao servidor, nem para o próprio Host
+                if (targetId == nm.LocalClientId || targetId == senderClientId || targetId == originClientId) continue;
 
                 nm.CustomMessagingManager.SendNamedMessage(
                     messageName, targetId, writer, NetworkDelivery.Unreliable);
@@ -261,7 +256,7 @@ public class VoiceManager : MonoBehaviour
                     sb.Append($"[{netObj.name}: Owner={netObj.OwnerClientId}, IsPlayer={IsPlayerObject(netObj)}, Active={netObj.gameObject.activeInHierarchy}] ");
                 }
             }
-            Debug.LogError($"[VoiceManager] [FALHA DE ASSOCIAÇÃO] Pacote recebido com origem {originClientId}, mas nenhum avatar com OwnerClientId correspondente foi encontrado na cena! Avatares rastreados na cena: {sb.ToString()}");
+            Debug.LogError($"[VoiceManager] Pacote de voz com origem {originClientId} não pôde ser roteado. Avatares na cena: {sb.ToString()}");
         }
     }
 

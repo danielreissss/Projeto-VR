@@ -38,6 +38,13 @@ public class VoiceReceiver : MonoBehaviour
     private const int BufferFrames = 80;
     private const int LeadFrames   = 8;
 
+    private void Awake()
+    {
+        // Marca como pronto ANTES de inicializar dependências para evitar race condition
+        // onde ReceivePacket() é chamado antes de Start() ser executado
+        _started = true;
+    }
+
     // ─────────────────────────────────────────────────────────────
     private void Start()
     {
@@ -50,7 +57,7 @@ public class VoiceReceiver : MonoBehaviour
         _audioSource.clip         = _streamClip;
         _audioSource.loop         = true;
         _audioSource.volume       = 1f;
-        
+
         // --- AJUSTES DE SEGURANÇA E DEBUG ---
         _audioSource.spatialBlend = 1f; // 3D - Mude para 0f se quiser testar em modo 2D absoluto.
         _audioSource.rolloffMode  = AudioRolloffMode.Linear;
@@ -68,7 +75,6 @@ public class VoiceReceiver : MonoBehaviour
 
         // Write pointer começa com margem na frente do read pointer
         _writePos = LeadFrames * _frameSize;
-        _started  = true;
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -76,12 +82,8 @@ public class VoiceReceiver : MonoBehaviour
     // ATENÇÃO: pode ser chamado de qualquer thread — use o lock.
     public void ReceivePacket(ulong originClientId, byte[] encoded)
     {
-        // CORREÇÃO 4: guarda o _frameSize localmente para não acessar campo
-        // antes de Start() ter sido chamado (race condition no primeiro frame)
         if (!_started) return;
 
-        // SEGURANÇA EXTRA: Se este avatar é o local, nunca deve tocar áudio vindo da rede.
-        // Isso resolve o problema de "ouvir a si mesmo" (curto-circuito).
         var netObj = GetComponent<NetworkObject>();
         if (netObj != null && netObj.IsOwner)
         {
@@ -127,13 +129,15 @@ public class VoiceReceiver : MonoBehaviour
                 int     clipLen = _streamClip.samples;
                 int     readPos = _audioSource.timeSamples;
 
-                // Detecta se o write pointer está prestes a alcançar o read pointer
+                // Detecta desincronização: underrun normal (writePos quase alcançado) OU
+                // drift: readPos ultrapassou writePos linearmente por margem significativa
+                // (acontece quando o áudio chega após pausa — readPos avança, writePos fica parado)
                 int distance = (_writePos - readPos + clipLen) % clipLen;
-                if (distance < _frameSize)
+                bool driftDetected = _writePos < readPos && distance > (LeadFrames * _frameSize * 2);
+                if (distance < _frameSize || driftDetected)
                 {
-                    // Underrun: avança write pointer com margem de segurança
-                    _writePos = (readPos + LeadFrames * _frameSize) % clipLen;
-                    Debug.LogWarning("[VoiceReceiver] Buffer underrun — resetando margem.");
+                    _writePos = (readPos + 4800) % clipLen;
+                    Debug.LogWarning($"[VoiceReceiver] Buffer reposicionado — drift detectado ou underrun.");
                 }
 
                 // CORREÇÃO 3b: verifica se o write pointer não vai ultrapassar o fim do clip
