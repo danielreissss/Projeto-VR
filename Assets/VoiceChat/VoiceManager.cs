@@ -198,7 +198,7 @@ public class VoiceManager : MonoBehaviour
             writer.WriteValueSafe(originClientId);
             writer.WriteBytesSafe(encoded, dataLen);
 
-            foreach (ulong targetId in nm.ConnectedClientsIds.ToList())
+            foreach (ulong targetId in nm.ConnectedClientsIds)
             {
                 // Não reenvia para quem originou, para quem enviou ao servidor, nem para o próprio Host
                 if (targetId == nm.LocalClientId || targetId == senderClientId || targetId == originClientId) continue;
@@ -217,7 +217,7 @@ public class VoiceManager : MonoBehaviour
         bool foundAvatar = false;
         if (nm.SpawnManager != null && nm.SpawnManager.SpawnedObjects != null)
         {
-            foreach (var netObj in nm.SpawnManager.SpawnedObjects.Values.ToList())
+            foreach (var netObj in nm.SpawnManager.SpawnedObjects.Values)
             {
                 if (netObj.OwnerClientId == originClientId)
                 {
