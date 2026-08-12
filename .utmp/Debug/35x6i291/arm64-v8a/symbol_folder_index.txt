@@ -1,1 +1,0 @@
-E:\testeMultiplayer3.0\Library\PramData\AndroidApplicationController\Cache\com.Danie.ConsultorioVR.DriveE\gradle-project\unityLibrary\build\intermediates\cxx\Debug\35x6i291\obj\arm64-v8a

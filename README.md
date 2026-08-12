@@ -107,6 +107,9 @@ VoiceReceiver no avatar remoto
 Áudio espacializado no ambiente VR
 ```
 
+A arquitetura, os parâmetros de áudio e os principais trade-offs estão detalhados em
+[`Docs/ARQUITETURA_CHAT_VOZ_QUEST3_UNITY.md`](Docs/ARQUITETURA_CHAT_VOZ_QUEST3_UNITY.md).
+
 No Quest, a permissão de microfone deve ser concedida no dispositivo. O sistema aguarda a permissão e a disponibilidade do dispositivo antes de iniciar a captura.
 
 ## Multiplayer
@@ -178,4 +181,3 @@ git push origin daniel
 ## Validação pendente
 
 A estrutura foi verificada sem GUIDs duplicados entre os assets integrados. A confirmação final de compilação e execução deve ser feita no Unity Editor com a licença ativa, abrindo a cena principal e testando Host, Client, spawn dos três avatares e chat de voz em dispositivos reais.
-

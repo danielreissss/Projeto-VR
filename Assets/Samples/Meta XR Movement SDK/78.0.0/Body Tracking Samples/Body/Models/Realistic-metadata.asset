@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19d1e02490929e41b903b049fc91c34, type: 3}
   m_Name: Realistic-metadata
   m_EditorClassIdentifier: 
-  _model: {fileID: 919132149155446097, guid: 13a9e7de67f3edd49bac705b6e3190d5, type: 3}
+  _model: {fileID: 919132149155446097, guid: 385f40b364b4cc4468d1b9a63125683e, type: 3}
   _configJson: {fileID: 4900000, guid: 28dda867e484e6b4cbdddb0f39576615, type: 3}

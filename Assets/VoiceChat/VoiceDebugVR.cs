@@ -15,10 +15,6 @@ public class VoiceDebugVR : MonoBehaviour
 
     void Start()
     {
-        // Debug HUD desabilitado para ganho de performance em Quest 3
-        enabled = false;
-        return;
-
         // Cria dinamicamente um objeto 3D TextMeshPro flutuante
         GameObject debugObj = new GameObject("VoiceDebugText_Hologram");
         _text = debugObj.AddComponent<TextMeshPro>();

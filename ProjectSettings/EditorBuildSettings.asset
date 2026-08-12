@@ -17,6 +17,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ConsultorioFinal.unity
     guid: 68592c2519deb89409a59ad269a8ef11
+  - enabled: 0
+    path: Assets/Scenes/Consultorio-v0.3.unity
+    guid: 945f4bb4808f3224ba332849200637f8
+  - enabled: 0
+    path: Assets/Scenes/testeConectaIpAutomatico.unity
+    guid: c1869967606cdae4db662722bc573c2e
+  - enabled: 0
+    path: Assets/Scenes/testeSpawner.unity
+    guid: 88adf7b05b198c248b9c91fc3c7e9549
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e39f09957c18d824aaeaae5d0bcb27ab, type: 2}

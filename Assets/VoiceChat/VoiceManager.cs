@@ -19,7 +19,7 @@ public class VoiceManager : MonoBehaviour
 
     [Header("Detecção de Avatar (fallback)")]
     [Tooltip("Palavras-chave no nome do prefab de avatar para forçar detecção caso faltem componentes.")]
-    public string[] avatarNameKeywords = { "NetworkAvatar", "Player", "Avatar", "Retargeter", "Meta" };
+    public string[] avatarNameKeywords = { "NetworkAvatar", "Player", "Avatar", "Retargeter", "Meta", "Networkmodel", "Thales" };
 
     [Header("Permissão de Microfone")]
     [Tooltip("Deixe true se não tiver OVRManager com requestRecordAudioPermissionOnStartup = true.")]
@@ -123,7 +123,7 @@ public class VoiceManager : MonoBehaviour
         {
             nm.CustomMessagingManager.RegisterNamedMessageHandler(messageName, OnGlobalVoicePacketReceived);
             _handlerRegistered = true;
-            Debug.Log($"[VoiceManager] Handler global registrado para '{messageName}'. IsServer={nm.IsServer}, IsClient={nm.IsClient}, LocalClientId={nm.LocalClientId}");
+            Debug.Log($"[VoiceManager] Handler global registrado para '{messageName}'");
         }
 
         // Polling contínuo de baixo custo para detectar novos objetos assim que nascem (sem race-conditions)
@@ -131,22 +131,11 @@ public class VoiceManager : MonoBehaviour
         {
             foreach (var kvp in nm.SpawnManager.SpawnedObjects)
             {
-                var netObj = kvp.Value;
-                if (netObj == null || !netObj.IsSpawned) continue;
-
-                bool hasSender = netObj.GetComponent<VoiceSender>() != null;
-                bool hasReceiver = netObj.GetComponent<VoiceReceiver>() != null;
-                bool alreadyConfigured = hasSender || hasReceiver;
-
-                if (!_trackedObjectIds.Contains(kvp.Key) || !alreadyConfigured)
+                if (kvp.Value != null && kvp.Value.IsSpawned && !_trackedObjectIds.Contains(kvp.Key))
                 {
-                    if (!_trackedObjectIds.Contains(kvp.Key))
-                    {
-                        _trackedObjectIds.Add(kvp.Key);
-                    }
-                    
+                    _trackedObjectIds.Add(kvp.Key);
                     // Como Unity inicializa componentes dinamicamente, aguardamos 1 frame
-                    StartCoroutine(WaitAndTryAddComponents(netObj));
+                    StartCoroutine(WaitAndTryAddComponents(kvp.Value));
                 }
             }
         }
@@ -188,8 +177,6 @@ public class VoiceManager : MonoBehaviour
         reader.ReadBytesSafe(ref encoded, dataLen);
 
         var nm = NetworkManager.Singleton;
-        if (nm == null) return;
-
 
         // 1. RELAY DO SERVIDOR: Se eu sou o Host/Server, repasso o áudio para os clientes
         if (nm.IsServer)
@@ -198,10 +185,10 @@ public class VoiceManager : MonoBehaviour
             writer.WriteValueSafe(originClientId);
             writer.WriteBytesSafe(encoded, dataLen);
 
-            foreach (ulong targetId in nm.ConnectedClientsIds)
+            foreach (ulong targetId in nm.ConnectedClientsIds.ToList())
             {
-                // Não reenvia para quem originou, para quem enviou ao servidor, nem para o próprio Host
-                if (targetId == nm.LocalClientId || targetId == senderClientId || targetId == originClientId) continue;
+                // Não reenvia para quem originou nem para quem enviou ao servidor
+                if (targetId == senderClientId || targetId == originClientId) continue;
 
                 nm.CustomMessagingManager.SendNamedMessage(
                     messageName, targetId, writer, NetworkDelivery.Unreliable);
@@ -211,52 +198,29 @@ public class VoiceManager : MonoBehaviour
         // 2. REPRODUÇÃO LOCAL: ignorar eco (não reproduzir a voz do próprio cliente)
         if (originClientId == nm.LocalClientId)
         {
+            // Debug.Log("[VoiceManager] Ignorando pacote de voz da própria origem (eco evitado).");
             return;
         }
 
-        bool foundAvatar = false;
         if (nm.SpawnManager != null && nm.SpawnManager.SpawnedObjects != null)
         {
-            foreach (var netObj in nm.SpawnManager.SpawnedObjects.Values)
-            {
-                if (netObj.OwnerClientId == originClientId)
-                {
-                    foundAvatar = true;
-                    var receiver = netObj.GetComponent<VoiceReceiver>();
-                    if (receiver != null)
-                    {
-                        receiver.ReceivePacket(originClientId, encoded);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[VoiceManager] [AUTO-REPAIR] Pacote de {originClientId} recebido, avatar '{netObj.name}' encontrado, MAS NÃO TEM VoiceReceiver! Adicionando dinamicamente...");
-                        TryAddVoiceComponents(netObj);
-                        receiver = netObj.GetComponent<VoiceReceiver>();
-                        if (receiver != null)
-                        {
-                            receiver.ReceivePacket(originClientId, encoded);
-                        }
-                        else
-                        {
-                            Debug.LogError($"[VoiceManager] Falha ao adicionar VoiceReceiver dinamicamente ao avatar '{netObj.name}'!");
-                        }
-                    }
-                    break;
-                }
-            }
-        }
+            bool delivered = false;
 
-        if (!foundAvatar)
-        {
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
-            if (nm.SpawnManager != null && nm.SpawnManager.SpawnedObjects != null)
+            foreach (var netObj in nm.SpawnManager.SpawnedObjects.Values.ToList())
             {
-                foreach (var netObj in nm.SpawnManager.SpawnedObjects.Values)
-                {
-                    sb.Append($"[{netObj.name}: Owner={netObj.OwnerClientId}, IsPlayer={IsPlayerObject(netObj)}, Active={netObj.gameObject.activeInHierarchy}] ");
-                }
+                if (netObj == null || netObj.OwnerClientId != originClientId)
+                    continue;
+
+                var receiver = netObj.GetComponent<VoiceReceiver>();
+                if (receiver == null)
+                    continue;
+
+                receiver.ReceivePacket(originClientId, encoded);
+                delivered = true;
             }
-            Debug.LogError($"[VoiceManager] Pacote de voz com origem {originClientId} não pôde ser roteado. Avatares na cena: {sb.ToString()}");
+
+            if (!delivered)
+                Debug.LogWarning($"[VoiceManager] Pacote de {originClientId} recebido mas nenhum objeto remoto com VoiceReceiver foi encontrado.");
         }
     }
 
@@ -336,16 +300,6 @@ public class VoiceManager : MonoBehaviour
         if (objName.Contains("BuildingBlock"))
             return false;
 
-        // Ignora o objeto de cena original (NetworkAvatarMeta SEM "(Clone)" no nome).
-        // Apenas clones spawned pelo PlayerPrefab devem receber componentes de voz.
-        // Nota: IsSceneObject é unreliable no lado do Client, então usamos o nome.
-        if (objName == "NetworkAvatarMeta")
-            return false;
-
-        // Ignora o LocalCharacter (modelo instanciado pelo NetworkCharacterHandler, não é um player object independente)
-        if (objName == "LocalCharacter")
-            return false;
-
         var movementComp = netObj.GetComponentInChildren<Meta.XR.Movement.Networking.NGO.NetworkCharacterBehaviourNGO>();
         var playerScript = netObj.GetComponentInChildren<PlayerNetworkScript>();
         var retargeterComp = netObj.GetComponentInChildren<Meta.XR.Movement.Networking.NetworkCharacterRetargeter>();
@@ -354,13 +308,30 @@ public class VoiceManager : MonoBehaviour
             return true;
             
         string lowerName = objName.ToLower();
-        if (lowerName.Contains("avatar") || lowerName.Contains("clone"))
+        if (lowerName.Contains("avatar") ||
+            lowerName.Contains("clone") ||
+            lowerName.Contains("networkmodel") ||
+            lowerName.Contains("localcharacter"))
             return true;
 
         foreach (var keyword in avatarNameKeywords)
         {
             if (lowerName.Contains(keyword.ToLower())) 
                 return true;
+        }
+
+        foreach (var child in netObj.GetComponentsInChildren<Transform>(true))
+        {
+            string childName = child.gameObject.name.ToLower();
+
+            if (childName.Contains("avatar") || childName.Contains("networkmodel"))
+                return true;
+
+            foreach (var keyword in avatarNameKeywords)
+            {
+                if (childName.Contains(keyword.ToLower()))
+                    return true;
+            }
         }
 
         return false;

@@ -1,1 +1,0 @@
-C:\Users\bielb\Desktop\testeMultiplayer3.0\Library\PramData\AndroidApplicationController\Cache\com.UnityTechnologies.com.unity.template.urpblank\gradle-project\unityLibrary\build\intermediates\cxx\Debug\683x1323\obj\arm64-v8a
