@@ -36,7 +36,7 @@ public class VoiceReceiver : MonoBehaviour
 
     // Buffer de ~1.6 s; margem inicial de ~160 ms para o read pointer não alcançar o write pointer
     private const int BufferFrames = 80;
-    private const int LeadFrames   = 8;
+    private const int LeadFrames   = 4;
 
     // ─────────────────────────────────────────────────────────────
     private void Start()

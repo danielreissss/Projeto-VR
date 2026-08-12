@@ -262,10 +262,6 @@ public class VoiceSender : MonoBehaviour
         {
             byte[] packet = _sendQueue.Dequeue();
 
-            using var writer = new FastBufferWriter(8 + packet.Length, Allocator.Temp);
-            writer.WriteValueSafe(localId);
-            writer.WriteBytesSafe(packet, packet.Length);
-
             if (nm.IsServer)
             {
                 // O Host não pode mandar mensagem para si mesmo no NGO (é ignorado).
@@ -273,6 +269,11 @@ public class VoiceSender : MonoBehaviour
                 foreach (ulong targetId in nm.ConnectedClientsIds)
                 {
                     if (targetId == localId) continue;
+
+                    using var writer = new FastBufferWriter(8 + packet.Length, Allocator.Temp);
+                    writer.WriteValueSafe(localId);
+                    writer.WriteBytesSafe(packet, packet.Length);
+
                     nm.CustomMessagingManager.SendNamedMessage(
                         messageName, targetId, writer, NetworkDelivery.Unreliable);
                 }
@@ -280,6 +281,10 @@ public class VoiceSender : MonoBehaviour
             else
             {
                 // Cliente comum envia para o servidor fazer o relay
+                using var writer = new FastBufferWriter(8 + packet.Length, Allocator.Temp);
+                writer.WriteValueSafe(localId);
+                writer.WriteBytesSafe(packet, packet.Length);
+
                 nm.CustomMessagingManager.SendNamedMessage(
                     messageName, NetworkManager.ServerClientId, writer, NetworkDelivery.Unreliable);
             }
