@@ -37,3 +37,6 @@ Thumbs.db
 
 # Outros artefatos gerados
 crashlytics-build.properties
+
+# Documentacao mantida apenas localmente
+/Docs/
