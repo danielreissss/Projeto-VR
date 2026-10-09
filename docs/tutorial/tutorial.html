@@ -289,9 +289,9 @@ chmod +x ConsultorioServer.x86_64
 <ol>
   <li>Confirme que o servidor está rodando (Parte 6).</li>
   <li>No Quest: <b>Biblioteca → Fontes desconhecidas → Consultorio VR</b>.</li>
-  <li>Em ~1 s o app conecta sozinho. No log do servidor aparece a conexão do cliente. Repita em cada óculos — todos entram na mesma sala.</li>
+  <li>O app conecta sozinho (e continua tentando até o servidor responder). No log do servidor aparece a conexão do cliente. Repita em cada óculos — todos entram na mesma sala.</li>
 </ol>
-<div class="warn box">O app tenta conectar <b>uma vez</b> ao abrir. Se o servidor ainda não estava no ar ou a rede não estava pronta, <b>feche e abra o app de novo</b>.</div>
+<div class="ok box"><b>Reconexão automática:</b> se o servidor ainda não estiver no ar, a rede demorar a ligar ou a conexão cair, o app tenta de novo sozinho a cada 3 segundos (no log: <code>LAN: sem conexão ... Nova tentativa</code>). Não precisa reabrir o app. O intervalo pode ser ajustado no componente <b>Lan Direct Connect</b> (<i>Reconnect Interval</i>).</div>
 
 <h3>7.3 Se o IP do servidor for outro nessa rede</h3>
 <p>Não precisa refazer o APK. Pelo notebook com adb (USB ou <code>adb connect IP_DO_QUEST:5555</code>):</p>

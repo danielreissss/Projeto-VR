@@ -15,6 +15,16 @@ public class LanDirectConnect : MonoBehaviour
     [Tooltip("Arquivo opcional (em Application.persistentDataPath) com o IP do servidor, para trocar o IP sem refazer o build.")]
     public string ipOverrideFile = "server_ip.txt";
 
+    [Header("Reconexão automática (cliente)")]
+    [Tooltip("Se a conexão falhar ou cair, o cliente tenta de novo sozinho.")]
+    public bool autoReconnect = true;
+    [Tooltip("Segundos entre as tentativas de reconexão.")]
+    public float reconnectInterval = 3f;
+
+    private string _clientIp;
+    private bool _quitting;
+    private Coroutine _reconnectRoutine;
+
     private enum Mode { Server, Host, Client }
 
     private void Start()
@@ -58,11 +68,52 @@ public class LanDirectConnect : MonoBehaviour
                 NetworkManager.Singleton.StartHost();
                 break;
             default:
-                Debug.Log($"--- LAN: Iniciando como CLIENTE conectando em {ip}:{port} ---");
-                transport.SetConnectionData(ip, port);
-                NetworkManager.Singleton.StartClient();
+                _clientIp = ip;
+                NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnected;
+                StartClient();
                 break;
         }
+    }
+
+    private void StartClient()
+    {
+        Debug.Log($"--- LAN: Iniciando como CLIENTE conectando em {_clientIp}:{port} ---");
+        NetworkManager.Singleton.GetComponent<UnityTransport>().SetConnectionData(_clientIp, port);
+        if (!NetworkManager.Singleton.StartClient())
+            OnClientDisconnected(NetworkManager.Singleton.LocalClientId);
+    }
+
+    // No cliente, este callback dispara tanto quando a conexão falha quanto quando ela cai
+    private void OnClientDisconnected(ulong clientId)
+    {
+        var nm = NetworkManager.Singleton;
+        if (nm == null || nm.IsServer) return;
+        if (!autoReconnect || _quitting || _reconnectRoutine != null) return;
+
+        Debug.LogWarning($"--- LAN: sem conexão com {_clientIp}:{port}. Nova tentativa em {reconnectInterval}s ---");
+        _reconnectRoutine = StartCoroutine(ReconnectCoroutine());
+    }
+
+    private IEnumerator ReconnectCoroutine()
+    {
+        yield return new WaitForSeconds(reconnectInterval);
+
+        var nm = NetworkManager.Singleton;
+        // Garante que a sessão anterior terminou antes de iniciar outra
+        if (nm.IsClient || nm.IsListening) nm.Shutdown();
+        while (nm.ShutdownInProgress) yield return null;
+
+        _reconnectRoutine = null;
+        if (!_quitting) StartClient();
+    }
+
+    private void OnApplicationQuit() => _quitting = true;
+
+    private void OnDestroy()
+    {
+        _quitting = true;
+        if (NetworkManager.Singleton != null)
+            NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
     }
 
     // Argumentos aceitos: -server | -host | -client, -ip <endereço>, -port <porta>
