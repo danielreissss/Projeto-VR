@@ -4,337 +4,166 @@
 <meta charset="utf-8">
 <title>Tutorial Consultório VR</title>
 <style>
-  @page { size: A4; margin: 18mm 16mm 18mm 16mm; }
+  @page { size: A4; }
   body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d1d1f; }
-  h1 { font-size: 22pt; margin: 0 0 4px; color: #0b3d91; }
-  h2 { font-size: 15pt; color: #0b3d91; border-bottom: 2px solid #0b3d91; padding-bottom: 3px; margin-top: 26px; page-break-after: avoid; }
-  h3 { font-size: 12pt; margin: 18px 0 6px; page-break-after: avoid; }
-  pre { background: #f2f4f7; border: 1px solid #d5d9e0; border-left: 4px solid #0b3d91; padding: 8px 10px; font-size: 9pt; white-space: pre-wrap; word-break: break-all; page-break-inside: avoid; }
+  h1 { font-size: 20pt; margin: 0 0 4px; color: #0b3d91; }
+  h2 { font-size: 14pt; color: #0b3d91; border-bottom: 2px solid #0b3d91; padding-bottom: 3px; margin-top: 22px; page-break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 14px 0 4px; page-break-after: avoid; }
+  pre { background: #f2f4f7; border: 1px solid #d5d9e0; border-left: 4px solid #0b3d91; padding: 8px 10px; font-size: 8.8pt; white-space: pre-wrap; word-break: break-all; page-break-inside: avoid; margin: 6px 0; }
   code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; background: #f2f4f7; padding: 0 3px; }
   pre code { background: none; padding: 0; }
-  .box { border-radius: 6px; padding: 8px 12px; margin: 10px 0; page-break-inside: avoid; }
+  .box { border-radius: 6px; padding: 7px 11px; margin: 8px 0; page-break-inside: avoid; }
   .info { background: #e8f0fe; border: 1px solid #9bb8f0; }
   .warn { background: #fff4e0; border: 1px solid #f0c070; }
-  .ok   { background: #e7f6ea; border: 1px solid #8fcf9c; }
-  table { border-collapse: collapse; width: 100%; margin: 8px 0; font-size: 9.5pt; page-break-inside: avoid; }
+  .subtitle { color: #555; margin-bottom: 10px; }
+  .diagram { font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; background: #fafbfc; border: 1px dashed #b0b6c0; padding: 8px; white-space: pre; }
+  table { border-collapse: collapse; width: 100%; font-size: 9.5pt; page-break-inside: avoid; }
   th, td { border: 1px solid #c9ced6; padding: 5px 7px; text-align: left; vertical-align: top; }
   th { background: #eef1f6; }
-  .subtitle { color: #555; margin-bottom: 14px; }
-  .diagram { font-family: "DejaVu Sans Mono", monospace; font-size: 7.5pt; background: #fafbfc; border: 1px dashed #b0b6c0; padding: 10px; white-space: pre; page-break-inside: avoid; }
   .pb { page-break-before: always; }
-  li { margin: 3px 0; }
-  .check li { list-style: none; }
-  .check li::before { content: "☐  "; }
+  li { margin: 2px 0; }
 </style>
 </head>
 <body>
 
-<h1>Consultório VR — Tutorial completo</h1>
-<div class="subtitle">Servidor Linux (DCC/DGTI) + Meta Quest na rede 5G · Unity 6000.0.39f1 · repositório <code>danielreissss/Projeto-VR</code></div>
+<h1>Consultório VR — Guia rápido</h1>
+<div class="subtitle">APK no Quest (PC de casa) + servidor dedicado no Linux (servidorNetuno) · Unity 6000.0.39f1</div>
 
-<div class="diagram">  [Notebook] --cabo DCC / ssh--> [Servidor Linux 172.30.22.31] --cabo--> [Roteador 5G]
-                                    roda: ConsultorioServer                      |
-                                    (servidor dedicado, UDP 7777)          Ethernet -> USB-C
-                                                                                 |
-                                                                     [Meta Quest com o APK]
-                                                                     (cliente: conecta no IP)</div>
+<div class="diagram">[Quest com APK] --Ethernet--> [Roteador 5G] --5G--> [Core 5G] --cabo--> [servidorNetuno: ConsultorioServer, UDP 7777]</div>
 
-<h2>0. Visão geral</h2>
 <ul>
-  <li><b>Óculos (APK):</b> têm o cenário inteiro dentro do app. Ao abrir, conectam sozinhos no IP do servidor configurado no componente <code>LanDirectConnect</code> da cena (<code>172.30.22.31</code>).</li>
-  <li><b>Servidor Linux:</b> roda o mesmo cenário <i>sem gráficos</i> como <b>servidor dedicado</b>. Não precisa de IP configurado: escuta em todas as interfaces na porta <b>UDP 7777</b>. Cria os avatares de quem conecta, sincroniza posições e faz o relay da voz.</li>
-  <li><b>Ordem obrigatória no dia:</b> primeiro o servidor rodando, depois abrir o app nos óculos.</li>
+  <li><b>Quest:</b> roda o cenário e conecta sozinho no IP do servidor (<code>172.30.22.31</code>). Se a conexão falhar ou cair, tenta de novo a cada 3 s.</li>
+  <li><b>Servidor Linux:</b> roda o mesmo cenário sem gráficos, como servidor (host da sala). Não precisa configurar IP.</li>
+  <li><b>Ordem:</b> servidor rodando → abrir o app nos óculos.</li>
 </ul>
 
-<table>
-  <tr><th>Parte</th><th>Onde</th><th>Quando</th></tr>
-  <tr><td>1. Preparar o projeto (git + LFS)</td><td>PC de casa (Windows)</td><td>Em casa</td></tr>
-  <tr><td>2. Gerar e instalar o APK nos óculos</td><td>PC de casa + Quest no USB</td><td>Em casa</td></tr>
-  <tr><td>3. (Opcional) gerar build do servidor no Windows</td><td>PC de casa</td><td>Em casa — plano B</td></tr>
-  <tr><td>4. Preparar o servidor: git, Git LFS, clone, Unity</td><td>Servidor Linux via SSH</td><td>No lab</td></tr>
-  <tr><td>5. Gerar o build do servidor no próprio servidor</td><td>Servidor Linux</td><td>No lab</td></tr>
-  <tr><td>6. Rodar o servidor</td><td>Servidor Linux</td><td>No lab</td></tr>
-  <tr><td>7. Conectar os óculos e entrar</td><td>Quest + roteador 5G</td><td>No lab</td></tr>
-</table>
+<h2>1. PC de casa — gerar e instalar o APK</h2>
 
-<div class="warn box"><b>Segurança:</b> a senha do servidor foi enviada por print. Não a coloque em arquivos do repositório nem em commits. Se possível, peça para trocá-la depois.</div>
-
-<!-- ============================================================ -->
-<h2 class="pb">PARTE 1 — Preparar o projeto em casa (Windows)</h2>
-
-<h3>1.1 Instalar as ferramentas</h3>
-<ol>
-  <li><b>Git for Windows:</b> <code>https://git-scm.com/download/win</code> (já inclui o Git LFS).</li>
-  <li><b>Unity Hub:</b> <code>https://unity.com/download</code>. Faça login com sua conta Unity.</li>
-  <li>No Hub → <b>Installs → Install Editor → Archive</b> e instale a versão <b>6000.0.39f1</b> com os módulos:
-    <ul>
-      <li><b>Android Build Support</b> (marque também <i>OpenJDK</i> e <i>Android SDK &amp; NDK Tools</i>)</li>
-      <li><b>Linux Dedicated Server Build Support</b> (para o plano B)</li>
-    </ul>
-    Se a versão já estiver instalada: engrenagem ao lado dela → <b>Add modules</b>.</li>
-  <li><b>ADB (Android Platform Tools):</b> já vem com o módulo Android do Unity, em<br>
-    <code>C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\platform-tools\adb.exe</code><br>
-    ou baixe separado: <code>https://developer.android.com/tools/releases/platform-tools</code>.</li>
-</ol>
-
-<h3>1.2 Baixar o projeto do GitHub (com Git LFS)</h3>
-<p>Abra o <b>PowerShell</b> na pasta onde quer o projeto (ex.: <code>E:\</code>):</p>
-<pre><code>git lfs install
-git clone https://github.com/danielreissss/Projeto-VR.git
-cd Projeto-VR
-git checkout claude/awesome-meitner-16iiyc
+<h3>1.1 Atualizar o projeto</h3>
+<pre><code>cd E:\testeMultiplayer3.0
+git switch main
+git pull
 git lfs pull</code></pre>
-<div class="info box">
-O branch <code>claude/awesome-meitner-16iiyc</code> tem as mudanças do servidor dedicado (PR #1). Depois que o PR for mergeado na <code>main</code>, use <code>git checkout main</code> no lugar.<br>
-Não baixe o ZIP pelo site do GitHub: o ZIP <b>não</b> traz os arquivos do Git LFS (texturas viram arquivos de texto pequenos).
-</div>
-<p><b>Conferir o LFS:</b> <code>git lfs ls-files | Select-Object -First 5</code> deve listar arquivos; e as imagens em <code>Assets</code> devem ter tamanho real (não 1 KB).</p>
 
-<div class="info box"><b>Alternativa — usar sua pasta <code>E:\testeMultiplayer3.0</code>:</b> se ela for um repositório git, rode nela <code>git stash</code>, <code>git fetch origin</code>, <code>git checkout claude/awesome-meitner-16iiyc</code>, <code>git lfs pull</code>, <code>git stash pop</code>. Se não for git, copie do PR os arquivos <code>Assets/Scripts/LanDirectConnect.cs</code>, <code>Assets/Editor/ServerBuild.cs</code> e <code>.meta</code>, e ajuste o IP pelo Inspector (passo 1.4). Faça backup antes.</div>
-
-<h3>1.3 Abrir no Unity</h3>
+<h3>1.2 Gerar o APK</h3>
 <ol>
-  <li>Unity Hub → <b>Projects → Add → Add project from disk</b> → selecione a pasta <code>Projeto-VR</code> (a que contém <code>Assets</code>, <code>Packages</code>, <code>ProjectSettings</code>).</li>
-  <li>Abra com a versão <b>6000.0.39f1</b>. A primeira importação demora (pode levar bastante tempo) e precisa de internet: o pacote <i>Meta Movement</i> é baixado do GitHub via git.</li>
-  <li>Quando terminar, deve aparecer o menu <b>Build</b> na barra superior do Unity.</li>
+  <li>Abra o projeto no Unity <b>6000.0.39f1</b>.</li>
+  <li>Abra <code>Assets/Scenes/ConsultorioFinal.unity</code> e confira no objeto com <b>Lan Direct Connect</b>: <b>Host Ip Address</b> = <code>172.30.22.31</code>.</li>
+  <li>Menu <b>Build → APK Meta Quest (Android)</b>. Saída: <code>Builds\Android\ConsultorioVR.apk</code>.</li>
 </ol>
 
-<h3>1.4 Conferir o IP do servidor na cena</h3>
-<ol>
-  <li>Abra <code>Assets/Scenes/ConsultorioFinal.unity</code>.</li>
-  <li>Na Hierarchy, encontre o objeto que tem o componente <b>Lan Direct Connect</b> (dica: digite <code>t:LanDirectConnect</code> na busca da Hierarchy).</li>
-  <li>Campo <b>Host Ip Address</b> = <code>172.30.22.31</code>, <b>Port</b> = <code>7777</code>. Salve (Ctrl+S).</li>
-</ol>
-<div class="info box">O IP do <b>Network Manager → Unity Transport</b> pode ficar como está: o <code>LanDirectConnect</code> sobrescreve esse valor ao iniciar. Esse mesmo campo é ignorado no build do servidor.</div>
+<h3>1.3 Instalar no Quest (modo desenvolvedor já ativo)</h3>
+<p>Quest no USB, aceite "Permitir depuração USB" no headset:</p>
+<pre><code>adb devices
+adb install -r Builds\Android\ConsultorioVR.apk
+adb tcpip 5555</code></pre>
+<p>Ou use <b>File → Build Profiles → Android → Build And Run</b>.</p>
 
-<!-- ============================================================ -->
-<h2 class="pb">PARTE 2 — Gerar o APK e instalar nos óculos (em casa)</h2>
-
-<h3>2.1 Ativar o modo desenvolvedor do Quest (uma vez só)</h3>
-<ol>
-  <li>Crie/entre numa <b>organização de desenvolvedor</b> em <code>https://developers.meta.com/horizon</code> (gratuito).</li>
-  <li>No app <b>Meta Horizon</b> do celular: <b>Dispositivos → seu Quest → Configurações do fone → Modo desenvolvedor → Ativar</b>.</li>
-  <li>Reinicie o Quest.</li>
-</ol>
-
-<h3>2.2 Gerar o APK</h3>
-<ol>
-  <li>No Unity: menu <b>Build → APK Meta Quest (Android)</b>. O script troca para Android se necessário (a troca de plataforma reimporta e demora).</li>
-  <li>Saída: <code>Builds\Android\ConsultorioVR.apk</code>.</li>
-</ol>
-<p>Alternativa manual: <b>File → Build Profiles → Android → Switch Platform</b>, deixe apenas <code>ConsultorioFinal</code> nas cenas e clique <b>Build</b>.</p>
-
-<h3>2.3 Instalar no Quest</h3>
-<ol>
-  <li>Ligue o Quest no PC com cabo USB-C de dados. No headset aparece <b>"Permitir depuração USB?"</b> → marque <i>Sempre permitir</i> → OK.</li>
-  <li>No PowerShell (na pasta do projeto):</li>
-</ol>
-<pre><code>adb devices                       # deve listar o Quest como "device"
-adb install -r Builds\Android\ConsultorioVR.apk</code></pre>
-<p>Deve aparecer <code>Success</code>. Repita para cada óculos (o mesmo APK serve para todos).</p>
-<p>Alternativa sem linha de comando: <b>Meta Quest Developer Hub</b> → arraste o APK para o dispositivo.</p>
-<p>Para abrir: no Quest, <b>Biblioteca → Fontes desconhecidas</b> (ou "Unknown Sources") → <i>Consultorio VR</i>.</p>
-
-<h3>2.4 (Recomendado) Teste em casa antes do lab</h3>
-<ol>
-  <li>Gere um servidor para Windows: <b>File → Build Profiles → Windows Server</b> (instale o módulo <i>Windows Dedicated Server Build Support</i> se pedir), cena <code>ConsultorioFinal</code>, <b>Build</b>. Rode no PowerShell: <code>.\ConsultorioServer.exe -logFile -</code>. Depois volte a plataforma para Android.</li>
-  <li>Descubra o IP do PC: <code>ipconfig</code> (ex.: <code>192.168.0.10</code>). Libere a porta UDP 7777 no Firewall do Windows se perguntado.</li>
-  <li>Envie esse IP para os óculos (sem rebuild):</li>
-</ol>
-<pre><code>"192.168.0.10" | Out-File -Encoding ascii server_ip.txt
-adb push server_ip.txt /sdcard/Android/data/com.Danie.ConsultorioVR.DriveE/files/server_ip.txt</code></pre>
-<ol start="4">
-  <li>Abra o app com o Quest no mesmo Wi-Fi. Se entrou no cenário e o servidor mostra a conexão, está funcionando.</li>
-  <li><b>Depois do teste, apague o arquivo</b> para voltar a usar o IP do servidor do lab:</li>
-</ol>
-<pre><code>adb shell rm /sdcard/Android/data/com.Danie.ConsultorioVR.DriveE/files/server_ip.txt</code></pre>
-
-<h3>2.5 Deixar o adb pronto para usar sem USB (para o lab)</h3>
-<p>No lab a porta USB-C estará com o adaptador Ethernet. Para conseguir logs/enviar arquivos pela rede depois:</p>
-<pre><code>adb tcpip 5555          # com o USB ainda conectado
-# no lab, na mesma rede do Quest:
-adb connect IP_DO_QUEST:5555</code></pre>
-<p>(O modo tcpip é perdido quando o Quest reinicia; é só repetir com USB.)</p>
-
-<!-- ============================================================ -->
-<h2 class="pb">PARTE 3 — (Plano B) Gerar o build do servidor no Windows</h2>
-<p>Use se a instalação do Unity no servidor (Parte 4/5) der problema — principalmente a <b>licença</b>. O executável Linux gerado no Windows roda no servidor sem Unity instalado.</p>
-<ol>
-  <li>No Unity: <b>Build → Servidor Linux (Dedicated Server)</b>.</li>
-  <li>Saída: <code>Builds\LinuxServer\</code> (contém <code>ConsultorioServer.x86_64</code> e a pasta <code>ConsultorioServer_Data</code>).</li>
-  <li>Leve a pasta no notebook/pendrive. No lab, envie com:</li>
-</ol>
+<h3>1.4 Plano B — build do servidor no Windows</h3>
+<p>Caso a licença do Unity não ative no servidor (passo 2.4), gere aqui: menu <b>Build → Servidor Linux (Dedicated Server)</b>. Precisa do módulo <i>Linux Dedicated Server Build Support</i> no Unity Hub. Envie no lab com:</p>
 <pre><code>scp -r .\Builds\LinuxServer admin@172.30.22.31:~/consultorio-build</code></pre>
-<p>Depois siga direto para a <b>Parte 6</b> usando <code>~/consultorio-build</code> como pasta.</p>
-<div class="info box">Recomendação: gere esse build em casa mesmo que pretenda usar a Parte 5. Se der errado no servidor, você não perde o dia.</div>
+<p>E pule para o passo 2.7.</p>
 
 <!-- ============================================================ -->
-<h2 class="pb">PARTE 4 — Preparar o servidor Linux (no lab)</h2>
+<h2 class="pb">2. Servidor Linux (via SSH)</h2>
 
-<h3>4.1 Entrar no servidor</h3>
-<p>Notebook conectado ao cabo da rede DCC. No PowerShell:</p>
-<pre><code>ping 172.30.22.31
-ssh admin@172.30.22.31          # senha: a enviada pelo professor</code></pre>
+<pre><code>ssh admin@172.30.22.31</code></pre>
 
-<h3>4.2 Ver o sistema e o espaço em disco</h3>
-<pre><code>cat /etc/os-release      # distribuição (Ubuntu/Debian/Rocky...)
-df -h ~                  # precisa de ~25 GB livres para Unity + projeto
-nproc; free -h
-ip -4 addr               # anote os IPs do servidor (DCC e o da rede 5G!)</code></pre>
-<div class="warn box"><b>Importante:</b> no <code>ip -4 addr</code>, veja se existe uma interface com IP da rede do roteador 5G. Se os óculos vão pela rede 5G, <b>esse</b> é o IP que eles precisam. Se for diferente de <code>172.30.22.31</code>, use o <code>server_ip.txt</code> (Parte 7.3).</div>
-
-<h3>4.3 Instalar git, Git LFS e utilitários</h3>
-<p>Ubuntu/Debian:</p>
+<h3>2.1 Dependências</h3>
 <pre><code>sudo apt update
-sudo apt install -y git git-lfs tmux wget curl unzip xvfb
+sudo apt install -y git git-lfs tmux wget xz-utils libgtk-3-0 libnss3 libasound2t64 libgbm1 xvfb
 git lfs install</code></pre>
-<p>Rocky/RHEL/Fedora: <code>sudo dnf install -y git git-lfs tmux wget curl unzip xorg-x11-server-Xvfb</code></p>
 
-<h3>4.4 Clonar o repositório com o cenário (Git LFS)</h3>
+<h3>2.2 Unity Editor (download direto)</h3>
+<pre><code>mkdir -p ~/Unity/6000.0.39f1 &amp;&amp; cd ~/Unity/6000.0.39f1
+wget https://download.unity3d.com/download_unity/15ea7ed0b100/LinuxEditorInstaller/Unity-6000.0.39f1.tar.xz
+tar -xf Unity-6000.0.39f1.tar.xz
+rm Unity-6000.0.39f1.tar.xz
+ls Editor/Unity</code></pre>
+
+<h3>2.3 Módulo Linux Dedicated Server</h3>
+<pre><code>cd ~/Unity/6000.0.39f1
+wget https://download.unity3d.com/download_unity/15ea7ed0b100/LinuxEditorTargetInstaller/UnitySetup-Linux-Server-Support-for-Editor-6000.0.39f1.tar.xz
+tar -xf UnitySetup-Linux-Server-Support-for-Editor-6000.0.39f1.tar.xz
+rm UnitySetup-Linux-Server-Support-for-Editor-6000.0.39f1.tar.xz
+ls Editor/Data/PlaybackEngines/LinuxStandaloneSupport/Variations | grep -i server</code></pre>
+<div class="info box">O último comando deve listar pastas com <code>server</code>. Se o <code>wget</code> der 404, confira o nome do arquivo na página <code>https://unity.com/releases/editor/archive</code> (Unity 6000.0.39f1 → Linux).</div>
+
+<h3>2.4 Ativar a licença</h3>
+<pre><code>UNITY=~/Unity/6000.0.39f1/Editor/Unity
+xvfb-run -a $UNITY -batchmode -quit -nographics -logFile - -username "SEU_EMAIL_UNITY" -password "SUA_SENHA_UNITY"</code></pre>
+<div class="warn box">Se aparecer <i>"No valid Unity Editor license found"</i> ou erro de ativação (comum com licença Personal via terminal), use o <b>Plano B (1.4)</b>. Com licença Pro/Educacional, acrescente <code>-serial XX-XXXX-XXXX-XXXX-XXXX-XXXX</code>.</div>
+
+<h3>2.5 Baixar o projeto</h3>
 <pre><code>cd ~
 git clone https://github.com/danielreissss/Projeto-VR.git
 cd Projeto-VR
-git checkout claude/awesome-meitner-16iiyc     # ou main, após o merge
-git lfs pull
-git lfs ls-files | head                        # confere que o LFS baixou</code></pre>
-<div class="info box">Se o repositório for <b>privado</b>, o git vai pedir usuário e senha: use seu usuário do GitHub e, como senha, um <b>Personal Access Token</b> (GitHub → Settings → Developer settings → Personal access tokens → <i>Fine-grained</i>, permissão <i>Contents: Read</i> no repositório). Senha normal não funciona.</div>
+git lfs pull</code></pre>
 
-<h3>4.5 Instalar o Unity Editor no servidor (modo sem tela)</h3>
-<p>Ubuntu/Debian — instalar o Unity Hub:</p>
-<pre><code>wget -qO - https://hub.unity3d.com/linux/keys/public | gpg --dearmor | \
-  sudo tee /usr/share/keyrings/Unity_Technologies_ApS.gpg &gt; /dev/null
-echo "deb [signedby=/usr/share/keyrings/Unity_Technologies_ApS.gpg] https://hub.unity3d.com/linux/repos/deb stable main" | \
-  sudo tee /etc/apt/sources.list.d/unityhub.list
-sudo apt update
-sudo apt install -y unityhub</code></pre>
-<p>Instalar o Editor 6000.0.39f1 com o módulo de servidor Linux (pelo Hub em modo headless):</p>
-<pre><code>xvfb-run -a unityhub --no-sandbox --headless install \
-  --version 6000.0.39f1 --changeset 15ea7ed0b100 --module linux-server
-
-xvfb-run -a unityhub --no-sandbox --headless editors --installed</code></pre>
-<p>O editor fica em <code>~/Unity/Hub/Editor/6000.0.39f1/Editor/Unity</code>. Guarde em uma variável:</p>
-<pre><code>UNITY=~/Unity/Hub/Editor/6000.0.39f1/Editor/Unity
-ls -l $UNITY</code></pre>
-
-<h3>4.6 Ativar a licença do Unity</h3>
-<p>O Editor só roda com licença ativada. Em linha de comando, tente:</p>
-<pre><code>$UNITY -batchmode -quit -nographics -logFile - \
-  -username "SEU_EMAIL_UNITY" -password "SUA_SENHA_UNITY"</code></pre>
-<div class="warn box">
-<b>Atenção:</b> a ativação por linha de comando com <code>-username/-password</code> é garantida para licenças <b>Pro/Educacional com serial</b> (acrescente <code>-serial XX-XXXX-...</code>). Para licença <b>Personal</b>, a Unity pode exigir ativação pelo Unity Hub com interface gráfica, o que não é possível só com SSH. Se aparecer erro de licença (<i>"No valid Unity Editor license found"</i>), <b>use o Plano B (Parte 3)</b> — o resultado é o mesmo. Pergunte também ao DCC/UFMG se há licença educacional (Unity Student/Education Grant).
-</div>
-
-<!-- ============================================================ -->
-<h2 class="pb">PARTE 5 — Gerar o build do servidor no próprio servidor</h2>
+<h3>2.6 Gerar o build do servidor</h3>
 <pre><code>cd ~/Projeto-VR
-$UNITY -batchmode -quit -nographics -projectPath . \
-  -executeMethod ServerBuild.BuildLinuxServer -logFile build.log
-tail -n 30 build.log
-ls Builds/LinuxServer/</code></pre>
-<ul>
-  <li>A primeira execução importa o projeto inteiro: pode levar de 20 min a mais de 1 h.</li>
-  <li>Sucesso: o log contém <code>[ServerBuild] StandaloneLinux64: Succeeded</code> e existe <code>Builds/LinuxServer/ConsultorioServer.x86_64</code>.</li>
-  <li>Erros de compilação: procure <code>error CS</code> no log (<code>grep "error CS" build.log</code>) e me envie.</li>
-</ul>
+xvfb-run -a $UNITY -batchmode -quit -nographics -projectPath . -executeMethod ServerBuild.BuildLinuxServer -logFile build.log
+tail -n 20 build.log
+ls Builds/LinuxServer</code></pre>
+<p>A primeira vez demora (importa o projeto inteiro). Sucesso = <code>[ServerBuild] StandaloneLinux64: Succeeded</code>. Erros:</p>
+<pre><code>grep -E "error CS|Build Finished|Exception" build.log</code></pre>
 
-<h3>Atualizar depois de mudar o projeto</h3>
-<pre><code>cd ~/Projeto-VR
-git pull
-git lfs pull
-$UNITY -batchmode -quit -nographics -projectPath . -executeMethod ServerBuild.BuildLinuxServer -logFile build.log</code></pre>
-<div class="info box">Sempre gere APK e servidor a partir do <b>mesmo commit</b>. Se a lista de prefabs de rede for diferente, os óculos não conseguem entrar.</div>
+<h3>2.7 Liberar a porta</h3>
+<pre><code>sudo ufw allow 7777/udp
+ip -4 addr</code></pre>
+<div class="warn box">Anote os IPs do <code>ip -4 addr</code>. Se o IP que a rede 5G enxerga não for <code>172.30.22.31</code>, veja o passo 3.3.</div>
 
-<!-- ============================================================ -->
-<h2 class="pb">PARTE 6 — Rodar o servidor</h2>
-
-<h3>6.1 Liberar a porta UDP 7777</h3>
-<pre><code>sudo ufw status                     # Ubuntu
-sudo ufw allow 7777/udp
-
-sudo firewall-cmd --add-port=7777/udp --permanent && sudo firewall-cmd --reload   # Rocky/RHEL</code></pre>
-
-<h3>6.2 Iniciar dentro do tmux (continua rodando se o SSH cair)</h3>
+<h3>2.8 Rodar o servidor</h3>
 <pre><code>tmux new -s vr
-cd ~/Projeto-VR/Builds/LinuxServer          # ou ~/consultorio-build (Plano B)
+cd ~/Projeto-VR/Builds/LinuxServer
 chmod +x ConsultorioServer.x86_64
 ./ConsultorioServer.x86_64 -logFile -</code></pre>
-<p>Procure no log a linha:</p>
-<pre><code>--- LAN: Iniciando como SERVIDOR DEDICADO na porta 7777 ---</code></pre>
-<ul>
-  <li>Sair do tmux sem parar o servidor: <b>Ctrl+B</b>, depois <b>D</b>.</li>
-  <li>Voltar: <code>tmux attach -t vr</code>. Parar o servidor: <b>Ctrl+C</b> dentro do tmux.</li>
-  <li>Conferir se está escutando (em outro terminal): <code>ss -ulpn | grep 7777</code></li>
-</ul>
-<div class="info box">Avisos de XR/OVR/áudio no log são esperados (o servidor não tem óculos nem placa de som). O que importa é a linha acima.</div>
-
-<h3>6.3 Argumentos opcionais</h3>
+<p>Pronto quando aparecer: <code>--- LAN: Iniciando como SERVIDOR DEDICADO na porta 7777 ---</code></p>
 <table>
-  <tr><th>Argumento</th><th>Efeito</th></tr>
-  <tr><td><code>-port 7777</code></td><td>Troca a porta (os óculos precisam usar a mesma — rebuild ou ajuste na cena)</td></tr>
-  <tr><td><code>-server</code></td><td>Força modo servidor (já é o padrão no build Dedicated Server)</td></tr>
-  <tr><td><code>-logFile server.log</code></td><td>Grava o log em arquivo em vez da tela</td></tr>
+  <tr><th>Ação</th><th>Comando</th></tr>
+  <tr><td>Sair do tmux sem parar o servidor</td><td><b>Ctrl+B</b> e depois <b>D</b></td></tr>
+  <tr><td>Voltar ao servidor</td><td><code>tmux attach -t vr</code></td></tr>
+  <tr><td>Parar o servidor</td><td><b>Ctrl+C</b> dentro do tmux</td></tr>
+  <tr><td>Conferir a porta</td><td><code>ss -ulpn | grep 7777</code></td></tr>
 </table>
+<p>No Plano B, use <code>cd ~/consultorio-build</code> no lugar de <code>cd ~/Projeto-VR/Builds/LinuxServer</code>.</p>
 
 <!-- ============================================================ -->
-<h2 class="pb">PARTE 7 — Conectar os óculos e entrar no cenário</h2>
+<h2 class="pb">3. Lab — entrar no cenário</h2>
 
-<h3>7.1 Ligar o Quest na rede</h3>
+<h3>3.1 Ligar o Quest</h3>
 <ol>
-  <li>Adaptador <b>USB-C → Ethernet</b> no Quest (de preferência com entrada de carga USB-C PD, para não descarregar).</li>
-  <li>Cabo do adaptador no <b>roteador 5G</b> (ou na rede onde o servidor é alcançável).</li>
-  <li>No Quest: <b>Configurações → Wi-Fi → desligar</b>, para garantir que o tráfego vá pelo cabo. Em Configurações deve aparecer a conexão Ethernet com IP.</li>
+  <li>Adaptador USB-C → Ethernet no Quest (de preferência com carga).</li>
+  <li>Cabo no <b>roteador 5G</b>.</li>
+  <li>No Quest: <b>Configurações → Wi-Fi → desligar</b>.</li>
 </ol>
 
-<h3>7.2 Entrar</h3>
-<ol>
-  <li>Confirme que o servidor está rodando (Parte 6).</li>
-  <li>No Quest: <b>Biblioteca → Fontes desconhecidas → Consultorio VR</b>.</li>
-  <li>O app conecta sozinho (e continua tentando até o servidor responder). No log do servidor aparece a conexão do cliente. Repita em cada óculos — todos entram na mesma sala.</li>
-</ol>
-<div class="ok box"><b>Reconexão automática:</b> se o servidor ainda não estiver no ar, a rede demorar a ligar ou a conexão cair, o app tenta de novo sozinho a cada 3 segundos (no log: <code>LAN: sem conexão ... Nova tentativa</code>). Não precisa reabrir o app. O intervalo pode ser ajustado no componente <b>Lan Direct Connect</b> (<i>Reconnect Interval</i>).</div>
+<h3>3.2 Entrar</h3>
+<p>Com o servidor rodando: <b>Biblioteca → Fontes desconhecidas → Consultorio VR</b>. O app conecta sozinho. Cada óculos que abrir o app entra na mesma sala.</p>
 
-<h3>7.3 Se o IP do servidor for outro nessa rede</h3>
-<p>Não precisa refazer o APK. Pelo notebook com adb (USB ou <code>adb connect IP_DO_QUEST:5555</code>):</p>
+<h3>3.3 Se o IP do servidor for outro</h3>
+<p>Sem refazer o APK, pelo PC com adb (USB, ou rede com <code>adb connect IP_DO_QUEST:5555</code>):</p>
 <pre><code>"NOVO_IP" | Out-File -Encoding ascii server_ip.txt
 adb push server_ip.txt /sdcard/Android/data/com.Danie.ConsultorioVR.DriveE/files/server_ip.txt</code></pre>
-<p>Prioridade do IP: argumento <code>-ip</code> → arquivo <code>server_ip.txt</code> → campo da cena.</p>
+<p>Para voltar ao IP da cena:</p>
+<pre><code>adb shell rm /sdcard/Android/data/com.Danie.ConsultorioVR.DriveE/files/server_ip.txt</code></pre>
 
-<!-- ============================================================ -->
-<h2 class="pb">PARTE 8 — Problemas comuns</h2>
+<h3>3.4 Conferir que o 5G está no caminho</h3>
+<p>De um PC ligado ao roteador 5G:</p>
+<pre><code>tracert 172.30.22.31</code></pre>
+<p>Latência abaixo de 1 ms indica rede local (sem 5G no caminho).</p>
+
+<h2>4. Problemas comuns</h2>
 <table>
-  <tr><th>Sintoma</th><th>Causa provável / solução</th></tr>
-  <tr><td>Texturas rosas/erradas ou arquivos de 1 KB</td><td>Git LFS não baixou: <code>git lfs install</code> + <code>git lfs pull</code>.</td></tr>
-  <tr><td>Unity não resolve pacote <i>com.meta.xr.sdk.movement</i></td><td>Git não instalado/no PATH, ou sem internet. Instale o git e reabra.</td></tr>
-  <tr><td>Menu <b>Build</b> não aparece</td><td>Não está no branch certo ou há erro de compilação no Console.</td></tr>
-  <tr><td><code>adb devices</code> vazio / <i>unauthorized</i></td><td>Aceite "Permitir depuração USB" no headset; use cabo de dados; modo desenvolvedor ativo.</td></tr>
-  <tr><td>"No valid Unity Editor license found" no servidor</td><td>Licença Personal não ativa via SSH → Plano B (Parte 3).</td></tr>
-  <tr><td><code>Permission denied</code> ao rodar o servidor</td><td><code>chmod +x ConsultorioServer.x86_64</code></td></tr>
-  <tr><td>Óculos abrem o cenário mas não aparece ninguém / não conecta</td><td>Servidor parado; IP errado (Parte 7.3); porta UDP 7777 bloqueada; óculos em rede que não alcança o servidor. Teste com o log: <code>adb logcat -s Unity</code> e procure <code>LAN:</code>.</td></tr>
-  <tr><td>Servidor some ao fechar o SSH</td><td>Rode dentro do <code>tmux</code> (Parte 6.2).</td></tr>
-  <tr><td>Voz não chega</td><td>Permita o microfone ao app no Quest (Configurações → Apps → Permissões).</td></tr>
+  <tr><th>Sintoma</th><th>Solução</th></tr>
+  <tr><td>Texturas rosas / arquivos de 1 KB</td><td><code>git lfs pull</code></td></tr>
+  <tr><td>Erro de licença no servidor</td><td>Plano B (1.4)</td></tr>
+  <tr><td><code>Permission denied</code> ao rodar</td><td><code>chmod +x ConsultorioServer.x86_64</code></td></tr>
+  <tr><td>Servidor parou ao fechar o SSH</td><td>Rodar dentro do <code>tmux</code> (2.8)</td></tr>
+  <tr><td>Óculos não entram</td><td>Servidor rodando? Porta 7777/udp liberada? IP correto (3.3)? Log do Quest: <code>adb logcat -s Unity | findstr LAN</code></td></tr>
+  <tr><td>Erros <code>DllNotFoundException</code> / <code>MetaMovementSDK</code> no log do servidor</td><td>Me envie o log; avisos de XR/OVR/áudio são normais</td></tr>
+  <tr><td>Sem voz</td><td>Quest: Configurações → Apps → Consultorio VR → permitir Microfone</td></tr>
 </table>
-
-<h2>Checklist</h2>
-<h3>Em casa</h3>
-<ul class="check">
-  <li>Git, Unity Hub, Unity 6000.0.39f1 + Android + Linux Dedicated Server instalados</li>
-  <li>Repositório clonado, branch certo, <code>git lfs pull</code> feito</li>
-  <li>IP <code>172.30.22.31</code> conferido no LanDirectConnect</li>
-  <li>APK gerado e instalado em todos os óculos</li>
-  <li>Teste em casa com servidor no PC (e <code>server_ip.txt</code> apagado depois)</li>
-  <li><code>adb tcpip 5555</code> feito</li>
-  <li>Build do servidor Linux (Plano B) gerado e copiado para o notebook</li>
-  <li>Adaptador USB-C → Ethernet (com carga) e cabo</li>
-</ul>
-<h3>No lab</h3>
-<ul class="check">
-  <li>SSH no servidor ok; <code>ip -4 addr</code> anotado (IP visto pela rede 5G)</li>
-  <li>git + git-lfs instalados, repositório clonado e <code>git lfs pull</code></li>
-  <li>Build do servidor gerado (Parte 5) ou enviado por scp (Plano B)</li>
-  <li>Porta UDP 7777 liberada</li>
-  <li>Servidor rodando no tmux com "SERVIDOR DEDICADO" no log</li>
-  <li>Quest no cabo, Wi-Fi desligado, app aberto → dentro do cenário</li>
-</ul>
 
 </body>
 </html>
