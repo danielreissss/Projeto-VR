@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Guia do lab: Quest 3 no 5G</title>
+<style>
+  @page { size: A4; }
+  body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 10.5pt; line-height: 1.45; color: #1d1d1f; }
+  h1 { font-size: 20pt; margin: 0 0 4px; color: #0b3d91; }
+  h2 { font-size: 14pt; color: #0b3d91; border-bottom: 2px solid #0b3d91; padding-bottom: 3px; margin-top: 22px; page-break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 14px 0 4px; page-break-after: avoid; }
+  pre { background: #f2f4f7; border: 1px solid #d5d9e0; border-left: 4px solid #0b3d91; padding: 8px 10px; font-size: 8.8pt; white-space: pre-wrap; word-break: break-all; page-break-inside: avoid; margin: 6px 0; }
+  code { font-family: "DejaVu Sans Mono", monospace; font-size: 9pt; background: #f2f4f7; padding: 0 3px; }
+  pre code { background: none; padding: 0; }
+  .box { border-radius: 6px; padding: 7px 11px; margin: 8px 0; page-break-inside: avoid; }
+  .info { background: #e8f0fe; border: 1px solid #9bb8f0; }
+  .warn { background: #fff4e0; border: 1px solid #f0c070; }
+  .ok { background: #e7f6ea; border: 1px solid #8fcf9c; }
+  .subtitle { color: #555; margin-bottom: 10px; }
+  .diagram { font-family: "DejaVu Sans Mono", monospace; font-size: 7.6pt; background: #fafbfc; border: 1px dashed #b0b6c0; padding: 8px; white-space: pre; }
+  table { border-collapse: collapse; width: 100%; font-size: 9.5pt; page-break-inside: avoid; margin: 6px 0; }
+  th, td { border: 1px solid #c9ced6; padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { background: #eef1f6; }
+  .pb { page-break-before: always; }
+  li { margin: 2px 0; }
+  .check li { list-style: none; }
+  .check li::before { content: "☐  "; }
+  .win { display: inline-block; background: #0b3d91; color: #fff; border-radius: 4px; padding: 1px 8px; font-size: 9pt; margin-right: 4px; }
+</style>
+</head>
+<body>
+
+<h1>Quest 3 no 5G do lab → servidor Linux</h1>
+<div class="subtitle">Guia do dia do teste · servidor <code>172.30.22.31</code> (servidorNetuno) · porta UDP <code>7777</code></div>
+
+<div class="diagram">[Quest 3 com o app] --Ethernet--> [Roteador 5G do lab] --5G--> [Rede 5G] --cabo--> [servidorNetuno 172.30.22.31]
+ cliente (APK)                                                                                  servidor dedicado (ConsultorioServer)</div>
+
+<h2>1. O que já está pronto</h2>
+<table>
+  <tr><th>Item</th><th>Estado</th></tr>
+  <tr><td>Servidor Linux em <code>~/consultorio-build</code> (release <code>servidor-v2</code>)</td><td><b>Pronto.</b> Já rodou, escutou em <code>0.0.0.0:7777</code> e iniciou como servidor dedicado.</td></tr>
+  <tr><td>APK instalado no Quest</td><td><b>Pronto.</b> O log do Quest mostrou <code>Iniciando como CLIENTE conectando em 172.30.22.31:7777</code>.</td></tr>
+  <tr><td>Porta 7777/udp no firewall do servidor</td><td><b>Liberada</b> (<code>ufw allow 7777/udp</code>).</td></tr>
+  <tr><td>Quest alcançando o servidor pela rede 5G</td><td><b>Falta testar.</b> Em casa o Quest estava no Wi-Fi <code>192.168.1.x</code>, que não alcança o servidor. É o objetivo do dia no lab.</td></tr>
+</table>
+<p><b>Como funciona:</b> o servidor roda o cenário sem gráficos e é o dono da sala. O Quest abre o app, conecta no IP do servidor e, se falhar, tenta de novo sozinho (a primeira tentativa dura cerca de 1 minuto, depois repete a cada 3 s). Não existe botão nem campo de IP dentro do app: o IP já está dentro do APK.</p>
+
+<h2>2. O que levar</h2>
+<ul class="check">
+  <li>Quest 3 carregado (com o app Consultorio VR já instalado)</li>
+  <li>Adaptador USB-C → Ethernet (de preferência com entrada de carga) e um cabo de rede</li>
+  <li>Cabo USB-C de dados e o computador com <code>adb</code>, se quiser ver o log do Quest (opcional)</li>
+  <li>Usuário e senha do servidor (<code>admin</code>)</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2 class="pb">3. Passo a passo no lab</h2>
+<p>Use o <b>computador do lab</b>, ligado ao cabo da rede DCC. Você vai abrir <b>duas janelas do PowerShell</b>, e cada uma entra no servidor por SSH.</p>
+
+<h3><span class="win">Janela 1</span> Subir o servidor</h3>
+<pre><code>ssh admin@172.30.22.31</code></pre>
+<p>Antes de subir, veja se ele já está rodando (da última vez ele ficou aberto):</p>
+<pre><code>ss -ulpn | grep 7777</code></pre>
+<ul>
+  <li><b>Aparece uma linha com <code>ConsultorioServ</code>:</b> já está rodando. Para recomeçar limpo, pare e suba de novo:
+<pre><code>pkill -f ConsultorioServer.x86_64
+tmux kill-session -t vr</code></pre></li>
+  <li><b>Não aparece nada:</b> siga direto para o próximo bloco.</li>
+</ul>
+<p>Suba o servidor dentro do <code>tmux</code>, com o log em arquivo (assim ele não para se você fechar a janela):</p>
+<pre><code>tmux new -s vr
+cd ~/consultorio-build
+./ConsultorioServer.x86_64 -logFile ~/server.log</code></pre>
+<p>Esse terminal fica "parado" porque o servidor está rodando. Para sair do tmux <b>sem parar</b> o servidor: aperte <b>Ctrl+B</b>, solte, e aperte <b>D</b>. Para voltar a ele depois: <code>tmux attach -t vr</code>.</p>
+<p>Confirme que o servidor subiu (em um terminal livre):</p>
+<pre><code>ss -ulpn | grep 7777
+grep "SERVIDOR DEDICADO" ~/server.log</code></pre>
+<p>Devem aparecer a linha com <code>0.0.0.0:7777</code> e a mensagem <code>--- LAN: Iniciando como SERVIDOR DEDICADO na porta 7777 ---</code>.</p>
+
+<h3><span class="win">Janela 2</span> Ver os pacotes chegando</h3>
+<p>Abra outro PowerShell no computador do lab:</p>
+<pre><code>ssh admin@172.30.22.31
+sudo apt install -y tcpdump
+sudo tcpdump -ni ens18 udp port 7777</code></pre>
+<p>O <code>tcpdump</code> roda <b>dentro do servidor</b>, porque é lá que o tráfego do Quest chega. Deixe essa janela aberta. Para parar, aperte <b>Ctrl+C</b>.</p>
+
+<h3>Ligar o Quest na rede 5G</h3>
+<ol>
+  <li>Encaixe o adaptador USB-C → Ethernet no Quest e ligue o cabo de rede no <b>roteador 5G</b> do lab.</li>
+  <li>No Quest: <b>Configurações → Wi-Fi</b> e <b>desligue o Wi-Fi</b>, para o tráfego ir só pelo cabo.</li>
+  <li>Abra o app: <b>Biblioteca → Fontes desconhecidas → Consultorio VR</b>.</li>
+</ol>
+
+<h3>Como saber que deu certo</h3>
+<table>
+  <tr><th>Onde</th><th>O que aparece</th></tr>
+  <tr><td>Janela 2 (<code>tcpdump</code>)</td><td>Linhas como <code>IP_DO_QUEST.porta &gt; 172.30.22.31.7777</code>. O <b>IP de origem</b> é o do Quest na rede 5G: anote.</td></tr>
+  <tr><td>Dentro do Quest</td><td>Você entra no consultório e o app deixa de ficar "tentando conectar".</td></tr>
+  <tr><td>Com 2 ou mais Quests</td><td>Cada um vê o avatar do outro e ouve a voz dele.</td></tr>
+</table>
+<div class="info box">No servidor, o log <code>~/server.log</code> cresce quando clientes entram (use <code>tail -f ~/server.log</code> para acompanhar). O servidor ainda não escreve uma frase do tipo "cliente conectado", por isso o <code>tcpdump</code> é a prova principal de que o tráfego chega.</div>
+
+<!-- ============================================================ -->
+<h2 class="pb">4. Se não conectar</h2>
+<table>
+  <tr><th>O que você vê</th><th>O que significa e o que fazer</th></tr>
+  <tr><td><code>tcpdump</code> não mostra nenhum pacote depois de ~1 min com o app aberto</td><td>O Quest não alcança o servidor. Confira: (1) o Quest está no cabo e o Wi-Fi está desligado? (2) qual IP o Quest recebeu (veja abaixo)? (3) o roteador 5G tem rota até a rede <code>172.30.22.0/24</code>? Se não souber, pergunte ao professor em que ponto o servidor está ligado.</td></tr>
+  <tr><td><code>tcpdump</code> mostra pacotes, mas o Quest não entra no cenário</td><td>Os pacotes chegam e a resposta não volta. No servidor, rode <code>ip route</code> e me mande a linha <code>default via ...</code>. A rede do Quest precisa ter rota de volta pelo mesmo roteador.</td></tr>
+  <tr><td>O app fica "tentando conectar"</td><td>É a reconexão automática: ela tenta a cada 3 s. Aguarde alguns minutos antes de concluir que falhou.</td></tr>
+  <tr><td><code>ss -ulpn | grep 7777</code> não mostra nada</td><td>O servidor não está rodando. Entre com <code>tmux attach -t vr</code>, ou veja o fim do log: <code>tail -n 30 ~/server.log</code>.</td></tr>
+  <tr><td><code>Address already in use</code> ao subir o servidor</td><td>Já existe um servidor rodando. Use <code>pkill -f ConsultorioServer.x86_64</code> e suba de novo.</td></tr>
+  <tr><td>Sem voz</td><td>No Quest: Configurações → Apps → Consultorio VR → permitir <b>Microfone</b>.</td></tr>
+  <tr><td>Um avatar parado na origem, sem dono</td><td>É o avatar do próprio servidor, esperado nesta versão (v2). A correção já existe no projeto (commit <code>90fc111</code>) e entra na versão v3 do servidor.</td></tr>
+</table>
+
+<h3>Como descobrir o IP do Quest no cabo</h3>
+<ul>
+  <li><b>Pelo roteador 5G:</b> a página de administração dele costuma ter a lista de dispositivos conectados (DHCP clients).</li>
+  <li><b>Pelo <code>adb</code>:</b> com o Quest no USB do computador (sem o adaptador Ethernet), rode
+<pre><code>adb shell ip -4 -br addr</code></pre>
+  Se não tiver o <code>adb</code> no computador do lab, o do Unity fica em <code>C:\Program Files\Unity\Hub\Editor\6000.0.39f1\Editor\Data\PlaybackEngines\AndroidPlayer\SDK\platform-tools\adb.exe</code>.</li>
+  <li><b>Meta Quest Developer Hub (opcional):</b> não é necessário para o teste. Se preferir uma tela, ele mostra o IP e os logs do Quest em <i>Device Manager</i>, mas exige instalar e entrar com a conta Meta.</li>
+  <li>Em casa o Quest estava em <code>192.168.1.x</code> (Wi-Fi). No lab o IP deve ser de outra faixa.</li>
+</ul>
+
+<h3>Conferir a rota a partir de um PC na rede 5G</h3>
+<pre><code>tracert 172.30.22.31</code></pre>
+<p>Latência abaixo de 1 ms indica rede local (sem o 5G no caminho).</p>
+
+<h2>5. Se precisar pedir ajuda</h2>
+<p>Mande estas informações (copie a saída dos comandos):</p>
+<pre><code>(no servidor)  ip -4 -br addr
+(no servidor)  ip route
+(no servidor)  tail -n 30 ~/server.log
+(no servidor)  o que o tcpdump mostrou (com ou sem pacotes)
+(no Quest)     adb shell ip -4 -br addr
+(no Quest)     adb logcat -s Unity | findstr LAN</code></pre>
+
+<h2>6. Comandos úteis (resumo)</h2>
+<table>
+  <tr><th>O que fazer</th><th>Comando</th></tr>
+  <tr><td>Entrar no servidor</td><td><code>ssh admin@172.30.22.31</code></td></tr>
+  <tr><td>Ver se o servidor está rodando</td><td><code>ss -ulpn | grep 7777</code></td></tr>
+  <tr><td>Voltar à tela do servidor</td><td><code>tmux attach -t vr</code></td></tr>
+  <tr><td>Sair do tmux sem parar o servidor</td><td><b>Ctrl+B</b>, solte, <b>D</b></td></tr>
+  <tr><td>Acompanhar o log</td><td><code>tail -f ~/server.log</code></td></tr>
+  <tr><td>Ver pacotes do Quest chegando</td><td><code>sudo tcpdump -ni ens18 udp port 7777</code></td></tr>
+  <tr><td>Parar o servidor</td><td><code>pkill -f ConsultorioServer.x86_64</code></td></tr>
+  <tr><td>Fechar a sessão do tmux</td><td><code>tmux kill-session -t vr</code></td></tr>
+</table>
+
+<h2>Checklist do dia</h2>
+<ul class="check">
+  <li>SSH no servidor funcionando</li>
+  <li>Servidor rodando no tmux, com <code>0.0.0.0:7777</code> no <code>ss</code></li>
+  <li><code>tcpdump</code> aberto na janela 2</li>
+  <li>Quest no cabo do roteador 5G, Wi-Fi desligado</li>
+  <li>App aberto; pacotes aparecendo no <code>tcpdump</code></li>
+  <li>IP do Quest e ping/tracert anotados para o relatório</li>
+  <li>Ao terminar: parar o servidor e religar o Wi-Fi do Quest</li>
+</ul>
+
+</body>
+</html>
