@@ -4,6 +4,8 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.IO;
+using System.Reflection;
+using Meta.XR.Movement.Networking.NGO;
 
 public class LanDirectConnect : MonoBehaviour
 {
@@ -59,6 +61,7 @@ public class LanDirectConnect : MonoBehaviour
             case Mode.Server:
                 Debug.Log($"--- LAN: Iniciando como SERVIDOR DEDICADO na porta {port} ---");
                 transport.SetConnectionData("0.0.0.0", port, "0.0.0.0");
+                DisableServerCharacterSpawn();
                 NetworkManager.Singleton.StartServer();
                 break;
             case Mode.Host:
@@ -114,6 +117,22 @@ public class LanDirectConnect : MonoBehaviour
         _quitting = true;
         if (NetworkManager.Singleton != null)
             NetworkManager.Singleton.OnClientDisconnectCallback -= OnClientDisconnected;
+    }
+
+    // O servidor dedicado não tem óculos: sem isso, o spawner da cena cria um avatar
+    // "fantasma" dono do servidor, parado na origem e visível para todos os clientes.
+    private static void DisableServerCharacterSpawn()
+    {
+        var spawner = FindFirstObjectByType<NetworkCharacterSpawnerNGO>();
+        var field = typeof(NetworkCharacterSpawnerNGO).GetField("_loadCharacterWhenConnected",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+        if (spawner == null || field == null)
+        {
+            Debug.LogWarning("--- LAN: não foi possível desligar o avatar automático do servidor ---");
+            return;
+        }
+        field.SetValue(spawner, false);
+        Debug.Log("--- LAN: avatar automático do servidor desligado ---");
     }
 
     // Argumentos aceitos: -server | -host | -client, -ip <endereço>, -port <porta>
